@@ -1,12 +1,12 @@
-import React from 'react';
+import React from "react";
 
-function Posts() {
+const Posts = () => {
   return (
-    <div>
-      <h2>All Blog Posts</h2>
-      <p>(Posts will go here)</p>
+    <div className="container mt-5">
+      <h2>Welcome to the Posts Page!</h2>
+      <p>This means your login and redirect worked. 💥</p>
     </div>
   );
-}
+};
 
 export default Posts;
