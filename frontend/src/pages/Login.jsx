@@ -20,8 +20,8 @@ const Login = () => {
     e.preventDefault();
     try {
       const data = await loginUser(email, password);
-      login(data.token, data.user);       // Save token + user to context
-      navigate("/posts");                 //Redirect after login to posts 
+      login(data.user); //only pass the user, not the token 
+      navigate("/posts"); //Redirect after login to posts 
     } catch (err) {
       console.error("Login failed:", err); 
       setError("Login failed. Please check credentials.");

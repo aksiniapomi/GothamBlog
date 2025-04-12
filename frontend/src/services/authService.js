@@ -5,6 +5,7 @@ export const loginUser = async (email, password) => {
   const response = await fetch(`${API_URL}/login`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
+    credentials: "include", //include the cookies (JWT stored HTTP-only)
     body: JSON.stringify({ email, password }),
   });
 
@@ -12,5 +13,5 @@ export const loginUser = async (email, password) => {
     throw new Error("Invalid credentials");
   }
 
-  return response.json(); // { token, user }
+  return response.json(); // should return {user}
 };
