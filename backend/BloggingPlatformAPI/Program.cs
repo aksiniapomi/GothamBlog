@@ -81,6 +81,17 @@ builder.Services.AddControllers().AddJsonOptions(options =>
         options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
     });
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowFrontend",
+        policy =>
+        {
+            policy.WithOrigins("http://localhost:5173")
+                  .AllowAnyHeader()
+                  .AllowAnyMethod();
+        });
+});
+
 //RATE LIMITING SERVICES 
 builder.Services.AddMemoryCache();
 builder.Services.Configure<IpRateLimitOptions>(options =>
@@ -95,6 +106,8 @@ builder.Services.Configure<IpRateLimitOptions>(options =>
         }
     };
 });
+
+
 builder.Services.AddSingleton<IRateLimitCounterStore, MemoryCacheRateLimitCounterStore>(); //Singleton (AddSingleton): Services are reused (for things like caching & rate-limiting).
 builder.Services.AddSingleton<IIpPolicyStore, MemoryCacheIpPolicyStore>();
 builder.Services.AddSingleton<IRateLimitConfiguration, RateLimitConfiguration>();
@@ -136,10 +149,13 @@ builder.Services.AddSwaggerGen(options => //Adds Swagger UI
     });
 });
 
+
+
 //Register logging
 builder.Logging.ClearProviders();
 builder.Logging.AddConsole(); //Adds logging to the console
 
+//Build the App (after all services are registered)
 var app = builder.Build();
 
 // Apply pending migrations automatically at startup
@@ -171,34 +187,6 @@ app.UseExceptionHandler(errorApp =>
         await context.Response.WriteAsJsonAsync(errorMessage);
     });
 });
-
-// Enable routing
-app.UseRouting();
-
-app.UseHttpsRedirection();
-app.UseAuthentication();
-
-//CORS (Cross-Origin Resource Sharing) and Rate Limiting to enhance security
-//CORS prevents unauthorized domains from accessing your API
-//Enable CORS (Allow frontend requests)
-//app.UseCors(policy =>
-// policy.AllowAnyOrigin() // Allows requests from any domain
-//    .AllowAnyMethod() // Allows GET, POST, PUT, DELETE
-//    .AllowAnyHeader()); // Allows any headers
-
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy("AllowFrontend",
-        policy =>
-        {
-            policy.WithOrigins("http://localhost:5173")
-                  .AllowAnyHeader()
-                  .AllowAnyMethod();
-        });
-});
-
-app.UseCors("AllowFrontend");
-
 //Enable Rate Limiting to prevent API abuse
 app.Use(async (context, next) =>
 {
@@ -223,11 +211,26 @@ app.Use(async (context, next) =>
     context.Items[cacheKey] = requestCount + 1;
     await next();
 });
+//Middleware pipeline 
+// Enable routing
+app.UseRouting();
+app.UseHttpsRedirection();
+app.UseAuthentication();
 
+//CORS (Cross-Origin Resource Sharing) and Rate Limiting to enhance security
+//CORS prevents unauthorized domains from accessing your API
+//Enable CORS (Allow frontend requests)
+//app.UseCors(policy =>
+// policy.AllowAnyOrigin() // Allows requests from any domain
+//    .AllowAnyMethod() // Allows GET, POST, PUT, DELETE
+//    .AllowAnyHeader()); // Allows any headers
+
+app.UseCors("AllowFrontend");
 app.UseIpRateLimiting(); // Enable rate limiting
 app.UseAuthorization();
 app.MapControllers();
 
+//start the app 
 app.Run();
 
 //Logging in process
