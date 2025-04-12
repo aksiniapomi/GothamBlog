@@ -71,8 +71,28 @@ namespace GothamPostBlogAPI.Controllers
             }
 
             var token = _authService.GenerateJwtToken(user);
+
+            //set JWT as secure HTTP-only cookie 
+            Response.Cookies.Append("jwt", token, new CookieOptions //store the response into a cookie on the browser 
+            {
+                HttpOnly = true, //javascript cannot access it 
+                Secure = false, // set to false during local dev if not using HTTPS (local)
+                SameSite = SameSiteMode.Strict, //prevent cross-site request forgery; only send this cookie when the request comes from the same site 
+                Expires = DateTimeOffset.UtcNow.AddHours(1) //after 1 hour, the user will need to log in again
+            });
+
             _logger.LogInformation("User {Username} logged in successfully.", user.Username);
-            return Ok(new { Token = token });
+
+            return Ok(new
+            {
+                message = "Login successful",
+                user = new
+                {
+                    user.UserId,
+                    user.Email,
+                    user.Role
+                }
+            });
         }
 
         // GET all users (Only Admins can view the full list of users)
