@@ -1,0 +1,59 @@
+.login-container {
+    min-height: 100vh;
+    background: url('../../assets/gothamSearch.jpeg') no-repeat center center/cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .login-box {
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 3rem;
+    border-radius: 16px;
+    color: white;
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.8);
+    text-align: center;
+    animation: fadeIn 1.5s ease-in-out;
+  }
+  
+  .login-box h2 {
+    font-family: 'Bangers', cursive;
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .login-box label {
+    color: #eee;
+    font-weight: bold;
+  }
+  
+  .login-box input {
+    margin-bottom: 1rem;
+  }
+  
+  .login-box button {
+    background-color: #0d1b2a;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 0.75rem;
+    width: 100%;
+    transition: background-color 0.3s ease;
+  }
+  
+  .login-box button:hover {
+    background-color: #1e2f4a;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
