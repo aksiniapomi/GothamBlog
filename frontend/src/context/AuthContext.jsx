@@ -1,10 +1,27 @@
 import React, { createContext, useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [authToken, setAuthToken] = useState(() => localStorage.getItem("token"));
-  const [user, setUser] = useState(() => JSON.parse(localStorage.getItem("user")));
+  const navigate = useNavigate();
+
+  const [authToken, setAuthToken] = useState(() =>
+    localStorage.getItem("token") || null
+  );
+
+  const [user, setUser] = useState(() => {
+    try {
+      const storedUser = localStorage.getItem("user");
+      if (storedUser && storedUser !== "undefined") {
+        return JSON.parse(storedUser);
+      }
+      return null;
+    } catch (error) {
+      console.error("Failed to parse user from localStorage:", error);
+      return null;
+    }
+  });
 
   const login = (token, userData) => {
     localStorage.setItem("token", token);
@@ -18,6 +35,7 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem("user");
     setAuthToken(null);
     setUser(null);
+    navigate("/login");
   };
 
   return (

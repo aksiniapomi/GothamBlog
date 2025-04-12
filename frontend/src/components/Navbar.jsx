@@ -1,20 +1,36 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-
-//reusable UI components 
+import React, { useContext } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { AuthContext } from '../context/AuthContext'; 
+import batLogo from '../assets/Gotham_City_Batman_Vol_3_14.png';
 
 function Navbar() {
+  const { authUser, logout } = useContext(AuthContext);
+  console.log("Auth user:", authUser);
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    navigate("/login"); // redirect to login after logout
+  };
+
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark bg-dark px-4">
+    <nav className="navbar navbar-expand-lg navbar-dark px-4"
+     style={{ backgroundColor: '#0d1b2a' }}>
       <Link className="navbar-brand" to="/">
-        <img src="/Gotham_City_Batman_Vol_3_14.png" alt="Logo" height="40" style={{ marginRight: '10px' }} />
+      <img src={batLogo} alt="Logo" height="40" style={{ marginRight: '10px', borderRadius: '50%' }} />
         Gotham Blog
       </Link>
       <div className="collapse navbar-collapse">
         <ul className="navbar-nav ms-auto">
           <li className="nav-item"><Link className="nav-link" to="/">Home</Link></li>
           <li className="nav-item"><Link className="nav-link" to="/posts">Posts</Link></li>
-          <li className="nav-item"><Link className="nav-link" to="/login">Login</Link></li>
+          {authUser ? (
+            <li className="nav-item">
+              <button className="btn btn-outline-light btn-sm nav-link" onClick={handleLogout}>Logout</button>
+            </li>
+          ) : (
+            <li className="nav-item"><Link className="nav-link" to="/login">Login</Link></li>
+          )}
         </ul>
       </div>
     </nav>

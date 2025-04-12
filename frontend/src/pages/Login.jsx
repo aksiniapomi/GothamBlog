@@ -1,24 +1,29 @@
 import React, { useState, useContext } from "react";
-import { useNavigate } from "react-router-dom"; //Step 1: Import useNavigate
+import { Navigate, useNavigate } from "react-router-dom"; 
 import { loginUser } from "../services/authService";
 import { AuthContext } from "../context/AuthContext";
 
 const Login = () => {
-  const { login } = useContext(AuthContext);
+  const { authToken, login } = useContext(AuthContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
-  const navigate = useNavigate(); //Step 2: Create navigate function
+  const navigate = useNavigate(); // navigate function
+
+  //Is the user already logged in? Redirect 
+  if (authToken) {
+    return <Navigate to="/posts" />; 
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const data = await loginUser(email, password);
-      login(data.token, data.user);       //Step 3: Save token + user to context
-      navigate("/posts");                 //Step 4: Redirect after login
+      login(data.token, data.user);       // Save token + user to context
+      navigate("/posts");                 //Redirect after login to posts 
     } catch (err) {
-      console.error("Login failed:", err); // Debug log (optional)
+      console.error("Login failed:", err); 
       setError("Login failed. Please check credentials.");
     }
   };
