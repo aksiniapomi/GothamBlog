@@ -16,11 +16,7 @@ const App = () => {
         <Route path="/login" element={<Login />} />
         
           {/* only logged in users can access posts */}
-          <Route path="/posts" element={ 
-            <PrivateRoute>
-             <Posts />
-            </PrivateRoute>
-          } />
+          <Route path="/posts" element={<Posts />} />
         </Routes>
       </AuthProvider>
   );

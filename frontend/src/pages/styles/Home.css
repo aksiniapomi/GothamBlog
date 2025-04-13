@@ -16,10 +16,10 @@
   .hero-section::after {
     content: '';
     position: absolute;
-    top: 210px; 
-    left: 170px; 
-    width: 200px;
-    height: 180px;
+    top: 16%; 
+    left: 9%; 
+    width: 18vw;
+    height: 18vw;
     background: radial-gradient(circle, #fffacd 0%, transparent 60%);
     opacity: 0.3;
     pointer-events: none;

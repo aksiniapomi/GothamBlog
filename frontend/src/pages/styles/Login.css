@@ -15,18 +15,21 @@
     max-width: 400px;
     box-shadow: 0 0 20px rgba(0,0,0,0.8);
     text-align: center;
-    animation: fadeIn 1.5s ease-in-out;
   }
   
   .login-box h2 {
     font-family: 'Bangers', cursive;
-    font-size: 2.5rem;
+    font-size: 2rem;       
     margin-bottom: 1.5rem;
+    white-space: nowrap;     
   }
   
   .login-box label {
     color: #eee;
     font-weight: bold;
+    text-align: left;     
+    display: block;      
+    margin-bottom: 0.25rem;
   }
   
   .login-box input {
@@ -56,4 +59,23 @@
       opacity: 1;
       transform: translateY(0);
     }
+  }
+  .form-group {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+  }
+  
+  .form-group label {
+    width: 30%;
+    text-align: right;
+    margin-right: 1rem;
+  }
+  
+  .form-group input {
+    flex: 1;
+    padding: 0.5rem;
+    border-radius: 6px;
+    border: none;
   }

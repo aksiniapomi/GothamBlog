@@ -4,8 +4,8 @@ import { AuthContext } from '../context/AuthContext';
 import batLogo from '../assets/Gotham_City_Batman_Vol_3_14.png';
 
 function Navbar() {
-  const { authUser, logout } = useContext(AuthContext);
-  console.log("Auth user:", authUser);
+  const { user, logout } = useContext(AuthContext);
+  console.log("Auth user:", user);
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -24,7 +24,7 @@ function Navbar() {
         <ul className="navbar-nav ms-auto">
           <li className="nav-item"><Link className="nav-link" to="/">Home</Link></li>
           <li className="nav-item"><Link className="nav-link" to="/posts">Posts</Link></li>
-          {authUser ? (
+          {user ? (
             <li className="nav-item">
               <button className="btn btn-outline-light btn-sm nav-link" onClick={handleLogout}>Logout</button>
             </li>
