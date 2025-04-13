@@ -108,7 +108,6 @@ builder.Services.Configure<IpRateLimitOptions>(options =>
     };
 });
 
-
 builder.Services.AddSingleton<IRateLimitCounterStore, MemoryCacheRateLimitCounterStore>(); //Singleton (AddSingleton): Services are reused (for things like caching & rate-limiting).
 builder.Services.AddSingleton<IIpPolicyStore, MemoryCacheIpPolicyStore>();
 builder.Services.AddSingleton<IRateLimitConfiguration, RateLimitConfiguration>();
@@ -149,8 +148,6 @@ builder.Services.AddSwaggerGen(options => //Adds Swagger UI
         }
     });
 });
-
-
 
 //Register logging
 builder.Logging.ClearProviders();
@@ -212,11 +209,27 @@ app.Use(async (context, next) =>
     context.Items[cacheKey] = requestCount + 1;
     await next();
 });
+
 //Middleware pipeline 
 // Enable routing
 app.UseRouting();
 app.UseHttpsRedirection();
-app.UseAuthentication();
+
+//Inject JWT from Cookie into Authorization header BEFORE Authentication runs
+app.Use(async (context, next) =>
+{
+    var token = context.Request.Cookies["jwt"];
+    if (!string.IsNullOrEmpty(token))
+    {
+        Console.WriteLine("JWT from cookie injected into Authorization header");
+        context.Request.Headers.Authorization = "Bearer " + token;
+    }
+    else
+    {
+        Console.WriteLine("No JWT cookie found.");
+    }
+    await next();
+});
 
 //CORS (Cross-Origin Resource Sharing) and Rate Limiting to enhance security
 //CORS prevents unauthorized domains from accessing your API
@@ -227,8 +240,12 @@ app.UseAuthentication();
 //    .AllowAnyHeader()); // Allows any headers
 
 app.UseCors("AllowFrontend");
-app.UseIpRateLimiting(); // Enable rate limiting
+
 app.UseAuthorization();
+app.UseAuthentication();
+
+app.UseIpRateLimiting(); // Enable rate limiting
+
 app.MapControllers();
 
 //start the app 

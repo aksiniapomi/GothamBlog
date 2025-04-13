@@ -1,17 +1,14 @@
+//Handles login, registration, and auth-related actions
 
-const API_URL = `${import.meta.env.VITE_API_URL}/User`;
+import API from './axios';
 
+// Send login request to backend
 export const loginUser = async (email, password) => {
-  const response = await fetch(`${API_URL}/login`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    credentials: "include", //include the cookies (JWT stored HTTP-only)
-    body: JSON.stringify({ email, password }),
+  const response = await API.post('/User/login', {
+    email,
+    password,
   });
 
-  if (!response.ok) {
-    throw new Error("Invalid credentials");
-  }
-
-  return response.json(); // should return {user}
+  //return the user data from the response
+  return response.data; // { message, user }
 };

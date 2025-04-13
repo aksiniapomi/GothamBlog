@@ -5,6 +5,7 @@ import Home from './pages/Home';
 import Posts from './pages/Posts';
 import Login from './pages/Login';
 import { AuthProvider } from "./context/AuthContext";
+import AdminPage from './pages/Admin'; 
 import PrivateRoute from './components/PrivateRoute';
 
 const App = () => {
@@ -13,10 +14,13 @@ const App = () => {
         <Navbar />
         <Routes>
         <Route path="/" element={<Home />} />   {/* default homepage */}
+        <Route path="/admin" element={
+          <PrivateRoute roleRequired="Admin">
+          <AdminPage/>
+          </PrivateRoute>
+        }/>
         <Route path="/login" element={<Login />} />
-        
-          {/* only logged in users can access posts */}
-          <Route path="/posts" element={<Posts />} />
+        <Route path="/posts" element={<Posts />} />
         </Routes>
       </AuthProvider>
   );

@@ -1,28 +1,28 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom"; 
 import { loginUser } from "../services/authService";
-import { AuthContext } from "../context/AuthContext";
+import { useAuth } from "../context/AuthContext";
 import './styles/Login.css';
 
 const Login = () => {
-  const { authToken, login } = useContext(AuthContext);
+  const { authUser, login } = useAuth(); 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
-  const navigate = useNavigate(); // navigate function
+  const navigate = useNavigate();
 
-  //Is the user already logged in? Redirect 
-  if (authToken) {
-    return <Navigate to="/posts" />; 
+  
+  if (authUser) {
+    return <Navigate to="/posts" />;
   }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const data = await loginUser(email, password);
-      login(data.user); //only pass the user, not the token 
-      navigate("/posts"); //Redirect after login to posts 
+      login(data.user); 
+      navigate("/posts");
     } catch (err) {
       console.error("Login failed:", err); 
       setError("Login failed. Please check credentials.");

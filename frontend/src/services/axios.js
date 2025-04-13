@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const API = axios.create({
   baseURL: import.meta.env.VITE_API_URL, // Loads from .env
-  withCredentials: true, //sends cookies like our JWT
+  withCredentials: true, //sends cookies like JWT with request; allows the frontend to send the jwt cookie 
 });
 
 // Response interceptor 
@@ -10,7 +10,7 @@ API.interceptors.response.use(   //handle responses globally/ show meesages or l
   response => response,
   error => {
     if (error.response && error.response.status === 401) {
-      console.warn('Unauthorized – maybe redirect to login?');
+      console.warn("Unauthorized. You may need to log in again"); 
     }
     return Promise.reject(error);
   }
