@@ -15,7 +15,7 @@ const App = () => {
         <Routes>
         <Route path="/" element={<Home />} />   {/* default homepage */}
         <Route path="/admin" element={
-          <PrivateRoute roleRequired="Admin">
+          <PrivateRoute roleRequired={0}>
           <AdminPage/>
           </PrivateRoute>
         }/>

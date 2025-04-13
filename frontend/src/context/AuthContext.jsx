@@ -25,7 +25,7 @@ export const AuthProvider = ({ children }) => {
         const user = {
           userId: parseInt(decoded.nameid || decoded.sub || decoded.name), 
           email: decoded.email || "unknown",
-          role: roleMap[decoded.role] ?? "Reader"
+          role: roleMap[decoded.role] ?? decoded.role // remap number to string
         };
 
         console.log("Decoded JWT:", decoded);
@@ -41,7 +41,12 @@ export const AuthProvider = ({ children }) => {
 
   const login = (user) => {
     setAuthUser(user);
-    navigate("/posts"); 
+  //  navigate("/posts"); 
+  if (user.role === "Admin" || user.role === 0 || user.role === "0") {
+    navigate("/admin");
+  } else {
+    navigate("/posts");
+  }
   };
 
   const logout = () => {

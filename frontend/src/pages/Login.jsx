@@ -22,7 +22,7 @@ const Login = () => {
     try {
       const data = await loginUser(email, password);
       login(data.user); 
-      navigate("/posts");
+    //  navigate("/posts");
     } catch (err) {
       console.error("Login failed:", err); 
       setError("Login failed. Please check credentials.");

@@ -82,7 +82,7 @@ namespace GothamPostBlogAPI.Services
                     {
                         new Claim(ClaimTypes.Name, user.UserId.ToString()), // Store User ID as Name claim
                         new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString()), // Store User ID
-                        new Claim(ClaimTypes.Role, user.Role.ToString()), // Store Role (Admin/User)
+                       new Claim(ClaimTypes.Role, user.Role.ToString()), // Store Role (Admin/User) 
                     }),
 
                     Expires = DateTime.UtcNow.AddHours(2), // Token expires in 2 hours

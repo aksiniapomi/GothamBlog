@@ -45,6 +45,23 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme) //Ena
     {
         options.RequireHttpsMetadata = false;
         options.SaveToken = true;
+
+        // Read JWT from the cookie (jwt) instead of looking for Authorzation header 
+        options.Events = new JwtBearerEvents
+        {
+            OnMessageReceived = context =>
+            {
+                // Read the token from the "jwt" cookie
+                var token = context.Request.Cookies["jwt"];
+                if (!string.IsNullOrEmpty(token))
+                {
+                    Console.WriteLine("Token from cookie: " + token);
+                    context.Token = token;
+                }
+                return Task.CompletedTask;
+            }
+        };
+
         options.TokenValidationParameters = new TokenValidationParameters
         {
             ValidateIssuer = true, //Ensure the token belongs to this API (created by this API)

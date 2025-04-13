@@ -14,13 +14,14 @@ const PrivateRoute = ({ children, roleRequired }) => {
     if (!user) {
       return <Navigate to="/login" />;
     }
-    if (roleRequired && user.role !== roleRequired) {
-      return (
-        <div className="container mt-5">
-          <h2 className="text-danger">Access Denied</h2>
-          <p>You do not have permission to view this page!</p>
-        </div>
-      );
+     // Convert both to strings to compare safely
+  if (roleRequired && user.role !== roleRequired) {
+    return (
+      <div className="container mt-5">
+        <h2 className="text-danger">Access Denied</h2>
+        <p>You do not have permission to view this page!</p>
+      </div>
+    );
     }
     return children;
   };
