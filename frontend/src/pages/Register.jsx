@@ -28,7 +28,11 @@ const Register = () => {
         await registerUser(formData);
         navigate('/login');
       } catch (err) {
-        setError(err.response?.data || 'Registration failed.');
+        const message = err.response?.data?.message || 
+                        typeof err.response?.data === 'string'
+                          ? err.response?.data
+                          : 'Registration failed.';
+        setError(message);
       }
     };
   
