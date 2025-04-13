@@ -20,7 +20,6 @@ namespace GothamPostBlogAPI.Services
             _logger = logger;
         }
 
-
         // Get all blog posts
         /* public async Task<List<BlogPost>> GetAllBlogPostsAsync()
          {
@@ -37,6 +36,7 @@ namespace GothamPostBlogAPI.Services
         public async Task<List<BlogPostResponseDTO>> GetAllBlogPostsAsync()
         {
             return await _context.BlogPosts
+                .AsNoTracking()  // Important: prevents EF tracking
                 .Include(bp => bp.User)
                 .Select(bp => new BlogPostResponseDTO
                 {
@@ -45,7 +45,7 @@ namespace GothamPostBlogAPI.Services
                     Content = bp.Content,
                     DateCreated = bp.DateCreated,
                     UserId = bp.UserId,
-                    Username = bp.User!.Username 
+                    Username = bp.User.Username
                 })
                 .ToListAsync();
         }

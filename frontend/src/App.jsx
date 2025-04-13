@@ -8,6 +8,7 @@ import { AuthProvider } from "./context/AuthContext";
 import AdminPage from './pages/Admin'; 
 import PrivateRoute from './components/PrivateRoute';
 import Register from './pages/Register';
+import ErrorPage from './pages/ErrorPage';
 
 
 const App = () => {
@@ -20,10 +21,13 @@ const App = () => {
           <PrivateRoute roleRequired={0}>
           <AdminPage/>
           </PrivateRoute>
-        }/>
+        }
+        />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/posts" element={<Posts />} />
+        <Route path="/error" element={<ErrorPage />} />
+        <Route path="*" element={<Navigate to="/error" replace />} />
         </Routes>
       </AuthProvider>
   );

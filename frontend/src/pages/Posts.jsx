@@ -1,29 +1,33 @@
-import React, { useEffect, useState } from 'react';
-import PostList from '../components/posts/PostList';
-import './styles/Posts.css';
+
+import { useState, useEffect } from 'react';
 import { getBlogPosts } from '../services/postService';
+import PostList from '../components/posts/PostList';
 
 const Posts = () => {
-  const [posts, setPosts] = useState([]);
+  const [postsData, setPostsData] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const data = await getBlogPosts(); 
-        setPosts(data.$values || []);
-      } catch (err) {
-        console.error("Error fetching posts", err);
-        setPosts([]); 
+        const data = await getBlogPosts();
+        setPostsData(data);
+      } catch (error) {
+        console.error('Failed to load Gotham news:', error);
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchPosts();
   }, []);
 
+  if (loading) return <div className="loading">Loading Gotham headlines...</div>;
+
   return (
-    <div className="posts-page">
-      <h2>🦇 <span className="batman-style">GOTHAM BLOG FEED</span></h2>
-      <PostList posts={posts} />
+    <div className="gotham-feed">
+      <h1>🦇 Gotham City News Feed</h1>
+      <PostList posts={postsData} />
     </div>
   );
 };

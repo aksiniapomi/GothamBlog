@@ -15,5 +15,14 @@ API.interceptors.response.use(   //handle responses globally/ show meesages or l
     return Promise.reject(error);
   }
 );
-
+export const getBlogPosts = async () => {
+  try {
+    const response = await api.get('/blogpost');
+    // Extract the $values array from the response
+    return response.data.$values || [];
+  } catch (error) {
+    console.error('Error fetching posts:', error);
+    throw error;
+  }
+}
 export default API;

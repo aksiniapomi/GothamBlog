@@ -95,7 +95,8 @@ builder.Services.AddScoped<LikeService>();
 //Add Controllers
 builder.Services.AddControllers().AddJsonOptions(options =>
     {
-        options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
+        options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+        options.JsonSerializerOptions.PropertyNamingPolicy = null;
     });
 
 builder.Services.AddCors(options =>

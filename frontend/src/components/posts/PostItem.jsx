@@ -7,9 +7,10 @@ const PostItem = ({ post }) => {
   return (
     <div className="post-item">
       <h4 className="post-item-title">{post.title}</h4>
-      <p className="post-item-meta">
-        By: {post.username || 'Unknown'} | {new Date(post.dateCreated).toLocaleDateString()}
-      </p>
+      <div className="post-item-meta">
+        <p><strong>By:</strong> {post.user?.username || 'Unknown'}</p>
+        <p>{post.dateCreated ? new Date(post.dateCreated).toLocaleDateString('en-GB') : 'Unknown Date'}</p>
+      </div>
     </div>
   );
 };

@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "wgR4ugNbHRA=",
+  "dgSpecHash": "LMJ04/96sHg=",
   "success": true,
   "projectFilePath": "/Users/xeniauniaccount/Desktop/GothamBlog/backend/BloggingPlatformAPI/BloggingPlatformAPI.csproj",
   "expectedPackageFiles": [
@@ -100,7 +100,7 @@
     "/Users/xeniauniaccount/.nuget/packages/system.security.principal.windows/5.0.0/system.security.principal.windows.5.0.0.nupkg.sha512",
     "/Users/xeniauniaccount/.nuget/packages/system.text.encoding.codepages/6.0.0/system.text.encoding.codepages.6.0.0.nupkg.sha512",
     "/Users/xeniauniaccount/.nuget/packages/system.text.encodings.web/6.0.0/system.text.encodings.web.6.0.0.nupkg.sha512",
-    "/Users/xeniauniaccount/.nuget/packages/system.text.json/9.0.2/system.text.json.9.0.2.nupkg.sha512",
+    "/Users/xeniauniaccount/.nuget/packages/system.text.json/9.0.4/system.text.json.9.0.4.nupkg.sha512",
     "/Users/xeniauniaccount/.nuget/packages/system.threading.channels/7.0.0/system.threading.channels.7.0.0.nupkg.sha512",
     "/Users/xeniauniaccount/.nuget/packages/system.threading.tasks.extensions/4.5.4/system.threading.tasks.extensions.4.5.4.nupkg.sha512",
     "/Users/xeniauniaccount/.nuget/packages/system.windows.extensions/6.0.0/system.windows.extensions.6.0.0.nupkg.sha512"

@@ -8,6 +8,8 @@ using GothamPostBlogAPI.Models.DTOs;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using System.Text.Json.Serialization;
+using System.Text.Json;
 
 namespace GothamPostBlogAPI.Controllers
 {
@@ -28,19 +30,28 @@ namespace GothamPostBlogAPI.Controllers
 
         // GET all blog posts (Public access to all users)
         [AllowAnonymous] //no authentication required 
-        [HttpGet] //route GET /api/blogposts 
-                  //async makes the method asynchronous - doesnt block the program while waiting for a task to complete 
-                  //without async the app would freeze while waiting for the database query; with async it keeps running while waiting for a response
-                  // public async Task<ActionResult<IEnumerable<BlogPost>>> GetBlogPosts()
-                  // {
-                  //     return await _blogPostService.GetAllBlogPostsAsync(); //await pauses the method while waiting for the database response; once ready it continues the execution
-                  //return await - wait for the results before returning 
-                  //  }
-
+        [HttpGet]
+        //route GET /api/blogposts 
+        //async makes the method asynchronous - doesnt block the program while waiting for a task to complete 
+        //without async the app would freeze while waiting for the database query; with async it keeps running while waiting for a response
+        // public async Task<ActionResult<IEnumerable<BlogPost>>> GetBlogPosts()
+        // {
+        //     return await _blogPostService.GetAllBlogPostsAsync(); //await pauses the method while waiting for the database response; once ready it continues the execution
+        //return await - wait for the results before returning 
+        //  }
+        
         public async Task<ActionResult<IEnumerable<BlogPostResponseDTO>>> GetBlogPosts()
         {
-            var posts = await _blogPostService.GetAllBlogPostsAsync(); // return List<BlogPostResponseDTO>
-            return Ok(posts);
+            var posts = await _blogPostService.GetAllBlogPostsAsync();
+
+            // Add this to ensure clean serialization
+            var options = new JsonSerializerOptions
+            {
+                ReferenceHandler = ReferenceHandler.IgnoreCycles,
+                WriteIndented = true
+            };
+
+            return new JsonResult(posts, options);
         }
 
 

@@ -1991,7 +1991,7 @@
           }
         }
       },
-      "System.Text.Json/9.0.2": {
+      "System.Text.Json/9.0.4": {
         "type": "package",
         "compile": {
           "lib/net9.0/System.Text.Json.dll": {
@@ -5469,10 +5469,10 @@
         "useSharedDesignerContext.txt"
       ]
     },
-    "System.Text.Json/9.0.2": {
-      "sha512": "4TY2Yokh5Xp8XHFhsY9y84yokS7B0rhkaZCXuRiKppIiKwPVH4lVSFD9EEFzRpXdBM5ZeZXD43tc2vB6njEwwQ==",
+    "System.Text.Json/9.0.4": {
+      "sha512": "pYtmpcO6R3Ef1XilZEHgXP2xBPVORbYEzRP7dl0IAAbN8Dm+kfwio8aCKle97rAWXOExr292MuxWYurIuwN62g==",
       "type": "package",
-      "path": "system.text.json/9.0.2",
+      "path": "system.text.json/9.0.4",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -5535,7 +5535,7 @@
         "lib/net9.0/System.Text.Json.xml",
         "lib/netstandard2.0/System.Text.Json.dll",
         "lib/netstandard2.0/System.Text.Json.xml",
-        "system.text.json.9.0.2.nupkg.sha512",
+        "system.text.json.9.0.4.nupkg.sha512",
         "system.text.json.nuspec",
         "useSharedDesignerContext.txt"
       ]
@@ -5644,7 +5644,8 @@
       "Microsoft.EntityFrameworkCore.Sqlite >= 9.0.2",
       "Microsoft.Extensions.Logging.Abstractions >= 9.0.2",
       "Moq >= 4.20.72",
-      "Swashbuckle.AspNetCore >= 7.3.1"
+      "Swashbuckle.AspNetCore >= 7.3.1",
+      "System.Text.Json >= 9.0.4"
     ]
   },
   "packageFolders": {
@@ -5743,6 +5744,10 @@
           "Swashbuckle.AspNetCore": {
             "target": "Package",
             "version": "[7.3.1, )"
+          },
+          "System.Text.Json": {
+            "target": "Package",
+            "version": "[9.0.4, )"
           }
         },
         "imports": [
