@@ -20,17 +20,34 @@ namespace GothamPostBlogAPI.Services
             _logger = logger;
         }
 
-        // Get all blog posts
-        public async Task<List<BlogPost>> GetAllBlogPostsAsync()
-        {
-            _logger.LogInformation("Fetching all blog posts.");
 
+        // Get all blog posts
+        /* public async Task<List<BlogPost>> GetAllBlogPostsAsync()
+         {
+             _logger.LogInformation("Fetching all blog posts.");
+
+             return await _context.BlogPosts
+                 .Include(blogPost => blogPost.User) // Author of the blog post (User table)
+                 .Include(blogPost => blogPost.Category) // Load related category objects 
+                 .Include(blogPost => blogPost.Comments)
+                 .Include(blogPost => blogPost.Likes)
+                 .ToListAsync(); // Asynchronously retrieves all records from the database and converts them into a List<>
+         } */
+
+        public async Task<List<BlogPostResponseDTO>> GetAllBlogPostsAsync()
+        {
             return await _context.BlogPosts
-                .Include(blogPost => blogPost.User) // Author of the blog post (User table)
-                .Include(blogPost => blogPost.Category) // Load related category objects 
-                .Include(blogPost => blogPost.Comments)
-                .Include(blogPost => blogPost.Likes)
-                .ToListAsync(); // Asynchronously retrieves all records from the database and converts them into a List<>
+                .Include(bp => bp.User)
+                .Select(bp => new BlogPostResponseDTO
+                {
+                    BlogPostId = bp.BlogPostId,
+                    Title = bp.Title,
+                    Content = bp.Content,
+                    DateCreated = bp.DateCreated,
+                    UserId = bp.UserId,
+                    Username = bp.User!.Username 
+                })
+                .ToListAsync();
         }
 
         // Get a blog post by ID

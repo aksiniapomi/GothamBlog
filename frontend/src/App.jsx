@@ -9,6 +9,7 @@ import AdminPage from './pages/Admin';
 import PrivateRoute from './components/PrivateRoute';
 import Register from './pages/Register';
 
+
 const App = () => {
   return (
       <AuthProvider>
