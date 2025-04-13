@@ -7,6 +7,7 @@ import Login from './pages/Login';
 import { AuthProvider } from "./context/AuthContext";
 import AdminPage from './pages/Admin'; 
 import PrivateRoute from './components/PrivateRoute';
+import Register from './pages/Register';
 
 const App = () => {
   return (
@@ -20,6 +21,7 @@ const App = () => {
           </PrivateRoute>
         }/>
         <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
         <Route path="/posts" element={<Posts />} />
         </Routes>
       </AuthProvider>

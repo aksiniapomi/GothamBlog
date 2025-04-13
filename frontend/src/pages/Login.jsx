@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom"; 
 import { loginUser } from "../services/authService";
 import { useAuth } from "../context/AuthContext";
+import { Link } from 'react-router-dom';
 import './styles/Login.css';
 
 const Login = () => {
@@ -55,9 +56,11 @@ const Login = () => {
               onChange={(e) => setPassword(e.target.value)} 
             />
           </div>
-
           <button className="btn btn-primary" type="submit">Login</button>
         </form>
+        <p className="mt-3">
+           Don’t have an account? <Link to="/register">Register</Link>
+          </p>
       </div>
     </div>
   );
