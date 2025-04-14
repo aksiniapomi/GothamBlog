@@ -5,6 +5,7 @@ import batLogo from '../assets/Gotham_City_Batman_Vol_3_14.png';
 
 function Navbar() {
   const { user, logout } = useContext(AuthContext);
+  console.log("Navbar user role:", user?.Role, typeof user?.Role);
   console.log("Auth user:", user);
   const navigate = useNavigate();
 
@@ -32,10 +33,10 @@ function Navbar() {
   {user && (
     <>
       <li className="nav-item nav-link text-light">
-      Welcome, <strong>{user.role === 0 ? "Admin" : user.role === 1 ? "Registered User" : "Reader"}</strong>
+      Welcome, <strong>{user.Role === 0 ? "Admin" : user.Role === 1 ? "Registered User" : "Reader"}</strong>
       </li>
       <li className="nav-item nav-link text-light">
-        <small>{user.email}</small>
+        <small>{user.email ?? user.Email ?? 'No email found'}</small>
       </li>
       <li className="nav-item">
         <button className="btn btn-outline-light btn-sm nav-link" onClick={handleLogout}>

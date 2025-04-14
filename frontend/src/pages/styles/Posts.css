@@ -57,3 +57,24 @@
   padding: 40px;
   color: white;
 }
+.create-post-button-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 1rem;
+  padding-right: 1rem;
+}
+
+.create-post-button {
+  background-color: #facc15; 
+  color: #1e1e1e;
+  font-weight: bold;
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.create-post-button:hover {
+  background-color: #fbbf24;
+}

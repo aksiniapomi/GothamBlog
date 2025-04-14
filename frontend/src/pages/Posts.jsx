@@ -1,12 +1,16 @@
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { getBlogPosts } from '../services/postService';
 import PostList from '../components/posts/PostList';
+import { AuthContext } from '../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
 import './styles/Posts.css';
 
 const Posts = () => {
   const [postsData, setPostsData] = useState(null);
   const [loading, setLoading] = useState(true);
+  const { user } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -31,6 +35,13 @@ const Posts = () => {
     <div className="post-list-page">
     <h1 className="gotham-title">Gotham Feed</h1>
     <div className="posts-page">
+    {user && (
+    <div className="create-post-button-container">
+    <button onClick={() => navigate('/create-post')} className="create-post-button">
+    Create New Post
+    </button>
+    </div>
+     )} 
     <PostList posts={postsData} />
   </div>
   </div>

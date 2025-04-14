@@ -9,6 +9,7 @@ import AdminPage from './pages/Admin';
 import PrivateRoute from './components/PrivateRoute';
 import Register from './pages/Register';
 import ErrorPage from './pages/ErrorPage';
+import PostForm from './components/posts/PostForm';
 
 
 const App = () => {
@@ -26,6 +27,7 @@ const App = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/posts" element={<Posts />} />
+        <Route path="/create-post" element={<PostForm />} />
         <Route path="/error" element={<ErrorPage />} />
         <Route path="*" element={<Navigate to="/error" replace />} />
         </Routes>
