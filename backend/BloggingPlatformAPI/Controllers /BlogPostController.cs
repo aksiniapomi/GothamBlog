@@ -39,19 +39,22 @@ namespace GothamPostBlogAPI.Controllers
         //     return await _blogPostService.GetAllBlogPostsAsync(); //await pauses the method while waiting for the database response; once ready it continues the execution
         //return await - wait for the results before returning 
         //  }
-        
+
         public async Task<ActionResult<IEnumerable<BlogPostResponseDTO>>> GetBlogPosts()
         {
             var posts = await _blogPostService.GetAllBlogPostsAsync();
 
-            // Add this to ensure clean serialization
+            /*
+            //clean serialization
             var options = new JsonSerializerOptions
             {
                 ReferenceHandler = ReferenceHandler.IgnoreCycles,
                 WriteIndented = true
             };
 
-            return new JsonResult(posts, options);
+            */
+            //return new JsonResult(posts, options);
+            return Ok(posts); //uses default ASP.NET JSON serialization without $refs
         }
 
 
