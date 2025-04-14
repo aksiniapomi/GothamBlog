@@ -3,10 +3,6 @@
 import React from 'react';
 import { format } from 'date-fns';
 
-// src/components/PostList.jsx
-import React from 'react';
-import { format } from 'date-fns';
-
 const PostList = ({ posts = [] }) => {
   // Safely handle the posts data
   const validPosts = Array.isArray(posts) ? posts : [];
@@ -36,19 +32,21 @@ const PostList = ({ posts = [] }) => {
 
   return (
     <div className="post-list">
-      {validPosts.map(post => (
-        <div key={post.blogPostId} className="post-card">
-          <h3>{post.title || 'Untitled Gotham Story'}</h3>
-          <div className="post-meta">
-            <span>By: {post.user?.username || 'Anonymous'}</span>
-            <span>{formatDate(post.dateCreated)}</span>
-          </div>
-          <p className="post-content">
-            {renderContent(post.content)}
-          </p>
-        </div>
-      ))}
+      {validPosts.map((post) =>
+  post.blogPostId && (
+    <div key={post.blogPostId} className="post-card">
+      <h3>{post.title || 'Untitled Gotham Story'}</h3>
+      <div className="post-meta">
+        <span>By: {post.user?.username || 'Anonymous'}</span>
+        <span>{formatDate(post.dateCreated)}</span>
+      </div>
+      <p className="post-content">
+        {renderContent(post.content)}
+      </p>
     </div>
+  )
+)}
+</div>
   );
 };
 

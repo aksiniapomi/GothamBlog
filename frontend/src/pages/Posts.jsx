@@ -11,7 +11,9 @@ const Posts = () => {
     const fetchPosts = async () => {
       try {
         const data = await getBlogPosts();
-        setPostsData(data);
+        console.log("Fetched data:", data);
+        //setPostsData(data);
+        setPostsData(Array.isArray(data) ? data : data?.$values || []);
       } catch (error) {
         console.error('Failed to load Gotham news:', error);
       } finally {

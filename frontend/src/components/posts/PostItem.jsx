@@ -8,7 +8,7 @@ const PostItem = ({ post }) => {
     <div className="post-item">
       <h4 className="post-item-title">{post.title}</h4>
       <div className="post-item-meta">
-        <p><strong>By:</strong> {post.user?.username || 'Unknown'}</p>
+        <p><strong>By:</strong> {post.username || 'Unknown'}</p>
         <p>{post.dateCreated ? new Date(post.dateCreated).toLocaleDateString('en-GB') : 'Unknown Date'}</p>
       </div>
     </div>
