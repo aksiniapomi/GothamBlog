@@ -10,6 +10,7 @@ import PrivateRoute from './components/PrivateRoute';
 import Register from './pages/Register';
 import ErrorPage from './pages/ErrorPage';
 import PostForm from './components/posts/PostForm';
+import Footer from './components/Footer';
 
 
 const App = () => {
@@ -31,7 +32,9 @@ const App = () => {
         <Route path="/error" element={<ErrorPage />} />
         <Route path="*" element={<Navigate to="/error" replace />} />
         </Routes>
+        <Footer />
       </AuthProvider>
+      
   );
 };
 
