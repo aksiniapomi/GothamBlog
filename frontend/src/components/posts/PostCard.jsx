@@ -3,14 +3,42 @@
 
 import React from 'react';
 import './PostCard.css'; 
+import { format } from 'date-fns';
 
-const PostCard = ({ title, content, author, date }) => {
+const PostCard = ({ post }) => {
+  const formatDate = (dateString) => {
+    try {
+      return dateString ? format(new Date(dateString), 'dd/MM/yyyy') : 'Unknown Date';
+    } catch {
+      return 'Unknown Date';
+    }
+  };
+
+  const renderContent = (content) => {
+    if (!content) return 'No content available';
+    return content.length > 150 ? `${content.substring(0, 150)}...` : content;
+  };
+
+  const getImageForPost = (post) => {
+    const title = (post.Title || "").toLowerCase();
+  
+    if (title.includes('batman')) return '/posts-images/batman.jpg';
+    if (title.includes('catwoman')) return '/posts-images/catwoman.jpg';
+    if (title.includes('lives')) return '/posts-images/catwoman.jpg';
+    if (title.includes('joker')) return '/posts-images/joker.jpg';
+    if (title.includes('gotham')) return '/posts-images/gotham-default.jpg';
+    
+    return '/post-images/gotham-default.jpg'; 
+  };
+
   return (
-    <div className="post-card bg-dark text-white p-4 rounded mb-4 shadow">
-      <h3 className="mb-2">{title}</h3>
-      <p className="mb-2"><strong>By:</strong> {author}</p>
-      <p className="mb-2">{content}</p>
-      <small className="text-muted">Posted on: {new Date(date).toLocaleString()}</small>
+    <div className="post-card">
+     <img src={getImageForPost(post)} alt="Post visual" />
+      <h3>{post.Title || 'Untitled Gotham Story'}</h3>
+      <div className="meta">
+        By: <span className="font-semibold">{post.Username || 'Anonymous'}</span> | {formatDate(post.DateCreated)}
+      </div>
+      <p className="content">{renderContent(post.Content)}</p>
     </div>
   );
 };

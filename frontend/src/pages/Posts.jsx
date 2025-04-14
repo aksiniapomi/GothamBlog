@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react';
 import { getBlogPosts } from '../services/postService';
 import PostList from '../components/posts/PostList';
+import './styles/Posts.css';
 
 const Posts = () => {
   const [postsData, setPostsData] = useState(null);
@@ -27,10 +28,12 @@ const Posts = () => {
   if (loading) return <div className="loading">Loading Gotham headlines...</div>;
 
   return (
-    <div className="gotham-feed">
-      <h1>🦇 Gotham City News Feed</h1>
-      <PostList posts={postsData} />
-    </div>
+    <div className="post-list-page">
+    <h1 className="gotham-title">Gotham Feed</h1>
+    <div className="posts-page">
+    <PostList posts={postsData} />
+  </div>
+  </div>
   );
 };
 

@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { format } from 'date-fns';
+import PostCard from './PostCard';
 
 const PostList = ({ posts = [] }) => {
   if (!Array.isArray(posts) || posts.length === 0) {
@@ -30,17 +31,8 @@ const PostList = ({ posts = [] }) => {
   return (
     <div className="post-list">
       {posts.map((post) => (
-  <div key={post.BlogPostId} className="post-card">
-    <h3>{post.Title || 'Untitled Gotham Story'}</h3>
-    <div className="post-meta">
-      <span>By: {post.Username || 'Anonymous'}</span>
-      <span>{formatDate(post.DateCreated)}</span>
-    </div>
-    <p className="post-content">
-      {renderContent(post.Content)}
-    </p>
-  </div>
-   ))}
+  <PostCard key={post.BlogPostId} post={post} />
+))}
     </div>
   );
 };
