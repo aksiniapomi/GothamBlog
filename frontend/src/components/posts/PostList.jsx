@@ -4,12 +4,17 @@ import React from 'react';
 import { format } from 'date-fns';
 
 const PostList = ({ posts = [] }) => {
-  // Safely handle the posts data
-  const validPosts = Array.isArray(posts) ? posts : [];
+  if (!Array.isArray(posts) || posts.length === 0) {
+    return (
+      <div className="no-posts">
+        <p>No Gotham news to display. Check back later!</p>
+      </div>
+    );
+  }
 
   const formatDate = (dateString) => {
     try {
-      return dateString ? format(new Date(dateString), 'dd/MM/yyyy') : 'Unknown Date';
+      return format(new Date(dateString), 'dd/MM/yyyy');
     } catch {
       return 'Unknown Date';
     }
@@ -22,31 +27,21 @@ const PostList = ({ posts = [] }) => {
       : content;
   };
 
-  if (!validPosts.length) {
-    return (
-      <div className="no-posts">
-        <p>No Gotham news to display. Check back later!</p>
-      </div>
-    );
-  }
-
   return (
     <div className="post-list">
-      {validPosts.map((post) =>
-  post.blogPostId && (
-    <div key={post.blogPostId} className="post-card">
-      <h3>{post.title || 'Untitled Gotham Story'}</h3>
-      <div className="post-meta">
-        <span>By: {post.user?.username || 'Anonymous'}</span>
-        <span>{formatDate(post.dateCreated)}</span>
-      </div>
-      <p className="post-content">
-        {renderContent(post.content)}
-      </p>
+      {posts.map((post) => (
+  <div key={post.BlogPostId} className="post-card">
+    <h3>{post.Title || 'Untitled Gotham Story'}</h3>
+    <div className="post-meta">
+      <span>By: {post.Username || 'Anonymous'}</span>
+      <span>{formatDate(post.DateCreated)}</span>
     </div>
-  )
-)}
-</div>
+    <p className="post-content">
+      {renderContent(post.Content)}
+    </p>
+  </div>
+   ))}
+    </div>
   );
 };
 
