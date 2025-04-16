@@ -5,7 +5,6 @@ import { getCategories } from '../../services/categoryService';
 const PostForm = ({ onSubmit }) => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
-  const [imageUrl, setImageUrl] = useState('');
   const [categories, setCategories] = useState([]);
   const [categoryId, setCategoryId] = useState('');
 
@@ -27,7 +26,7 @@ const PostForm = ({ onSubmit }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (typeof onSubmit === 'function') {
-      onSubmit({ title, content, categoryId, imageUrl });
+      onSubmit({ title, content, categoryId });
     } else {
       console.error("onSubmit is not a function");
     }
@@ -39,18 +38,14 @@ const PostForm = ({ onSubmit }) => {
         <label htmlFor="title">Title</label>
         <input type="text" className="form-control" id="title" value={title}
           onChange={(e) => setTitle(e.target.value)} />
+      
       </div>
       <div className="mb-3">
         <label htmlFor="content">Content</label>
         <textarea className="form-control" id="content" rows="4" value={content}
           onChange={(e) => setContent(e.target.value)} />
       </div>
-      <div className="mb-3">
-        <label htmlFor="imageUrl">Image URL</label>
-        <input type="text" className="form-control" id="imageUrl" value={imageUrl}
-          onChange={(e) => setImageUrl(e.target.value)} />
-      </div>
-
+    
       <div className="mb-3">
         <label htmlFor="category">Category</label>
         <select

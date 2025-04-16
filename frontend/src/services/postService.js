@@ -17,7 +17,7 @@ export const getBlogPosts = async () => {
   }
 };
 
-export const createPost = async ({ title, content, imageUrl, categoryId }) => {
+export const createPost = async ({ title, content, categoryId }) => {
   const resp = await api.post('/blogpost', {
     Title:      title,
     Content:    content,

@@ -20,21 +20,23 @@ const PostCard = ({ post }) => {
   };
 
   const getImageForPost = (post) => {
-    const title = (post.Title || "").toLowerCase();
-  
+    const title = (post.Title || post.title || "").toLowerCase();
     if (title.includes('batman')) return '/posts-images/batman.jpg';
     if (title.includes('catwoman')) return '/posts-images/catwoman.jpg';
+    if (title.includes('jewel')) return '/posts-images/catwomanjewels.jpg'; 
     if (title.includes('lives')) return '/posts-images/catwoman.jpg';
     if (title.includes('joker')) return '/posts-images/joker.jpg';
     if (title.includes('gotham')) return '/posts-images/gotham-default.jpg';
-    if (title.includes('jewel')) return '/posts-images/catwomanjewels.jpg'; 
     
-    return '/post-images/gotham-default.jpg'; 
+    
+    return '/posts-images/gotham-default.jpg'; 
   };
 
   return (
     <div className="post-card">
-     <img src={getImageForPost(post)} alt="Post visual" />
+     <img src={getImageForPost(post)} 
+      alt="Post visual" 
+      />
       <h3>{post.Title || 'Untitled Gotham Story'}</h3>
       <div className="meta">
         By: <span className="font-semibold">{post.Username || 'Anonymous'}</span> | {formatDate(post.DateCreated)}
