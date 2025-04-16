@@ -4,6 +4,7 @@ import API from '../services/axios';
 import './styles/SinglePost.css';
 import { format } from 'date-fns';
 import { useNavigate } from 'react-router-dom';
+import { getCommentsForPost } from '../services/commentService';
 
 const getImageForPost = (post) => {
     const title = (post.Title || "").toLowerCase();
@@ -21,6 +22,7 @@ const SinglePost = () => {
   const { id } = useParams(); // get post ID from URL
   const navigate = useNavigate();
   const [post, setPost] = useState(null);
+  const [comments, setComments] = useState([]);
   const [error, setError] = useState('');
 
 const formatDate = (dateString) => {
@@ -32,17 +34,20 @@ const formatDate = (dateString) => {
   };  
 
   useEffect(() => {
-    const fetchPost = async () => {
+    const fetchPostAndComments = async () => {
       try {
         const response = await API.get(`/BlogPost/${id}`);
         setPost(response.data);
+
+        const commentsData = await getCommentsForPost(Number(id));
+        setComments(commentsData);
       } catch (err) {
-        console.error('Error fetching post:', err);
+        console.error('Error fetching post or comments:', err);
         setError('Could not load post.');
       }
     };
 
-    fetchPost();
+    fetchPostAndComments();
   }, [id]);
 
   if (error) return <p className="text-danger">{error}</p>;
@@ -64,15 +69,27 @@ const formatDate = (dateString) => {
         alt="Blog visual"
         className="single-post-image"
       />
-
       <p className="single-post-content">{post.Content}</p>
 
       <hr />
-      <p>💬 Comments will go here</p>
-      <p>❤️ Like button goes here</p>
+        <div className="comments-section">
+          <h4>💬 Comments</h4>
+          {comments.length === 0 ? (
+            <p>No comments yet. Be the first to comment!</p>
+          ) : (
+            comments.map((comment) => (
+              <div key={comment.CommentId} className="comment">
+                <p><strong>{comment?.User?.Username || 'Anonymous'}</strong>:</p>
+                <p>{comment.CommentContent}</p>
+              </div>
+            ))
+          )}
+        </div>
+
+        <button className="back-button" onClick={() => navigate('/posts')}>← Back to Posts</button>
+      </div>
     </div>
-  </div>
-);
+  );
 };
 
 
