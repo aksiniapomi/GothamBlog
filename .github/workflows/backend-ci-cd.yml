@@ -20,12 +20,15 @@ jobs:
 
       - name: Restore Dependencies
         run: dotnet restore
+        working-directory: backend/BloggingPlatformAPI
 
       - name: Build the Project
         run: dotnet build --configuration Release --no-restore
+        working-directory: backend/BloggingPlatformAPI
 
       - name: Run Unit Tests
         run: dotnet test --no-restore --verbosity normal
+        working-directory: backend/BloggingPlatformAPI
 
   docker:
     needs: build
@@ -44,6 +47,7 @@ jobs:
       - name: Build Docker Image
         run: |
           docker build -t ${{ secrets.DOCKER_USERNAME }}/bloggingplatformapi:latest .
+        working-directory: backend/BloggingPlatformAPI
 
       - name: Push Docker Image to Docker Hub
         run: |
