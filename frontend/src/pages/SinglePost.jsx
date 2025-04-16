@@ -12,6 +12,7 @@ const getImageForPost = (post) => {
   
     if (title.includes('batman')) return '/posts-images/batman.jpg';
     if (title.includes('catwoman')) return '/posts-images/catwoman.jpg';
+    if (title.includes('jewel')) return '/posts-images/catwomanjewels.jpg';
     if (title.includes('lives')) return '/posts-images/catwoman.jpg';
     if (title.includes('joker')) return '/posts-images/joker.jpg';
     if (title.includes('gotham')) return '/posts-images/gotham-default.jpg';

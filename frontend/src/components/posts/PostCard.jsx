@@ -28,7 +28,6 @@ const PostCard = ({ post }) => {
     if (title.includes('joker')) return '/posts-images/joker.jpg';
     if (title.includes('gotham')) return '/posts-images/gotham-default.jpg';
     
-    
     return '/posts-images/gotham-default.jpg'; 
   };
 
