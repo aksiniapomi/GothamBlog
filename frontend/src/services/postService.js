@@ -17,7 +17,11 @@ export const getBlogPosts = async () => {
   }
 };
 
-export const createPost = async (postData) => {
-  const response = await api.post('/blogpost', postData);
-  return response.data;
+export const createPost = async ({ title, content, imageUrl, categoryId }) => {
+  const resp = await api.post('/blogpost', {
+    Title:      title,
+    Content:    content,
+    CategoryId: categoryId
+  });
+  return resp.data;
 };

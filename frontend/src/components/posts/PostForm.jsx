@@ -1,16 +1,33 @@
 //for adding or editing a post
-
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { getCategories } from '../../services/categoryService';
 
 const PostForm = ({ onSubmit }) => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [imageUrl, setImageUrl] = useState('');
+  const [categories, setCategories] = useState([]);
+  const [categoryId, setCategoryId] = useState('');
+
+ // fetch categories on mount 
+ useEffect(() => {
+  async function load() {
+    try {
+      const cats = await getCategories();
+      setCategories(cats);
+      // 2) default to first one
+      if (cats.length) setCategoryId(cats[0].CategoryId);
+    } catch (err) {
+      console.error('Could not load categories', err);
+    }
+  }
+  load();
+}, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (typeof onSubmit === 'function') {
-      onSubmit({ title, content, imageUrl });
+      onSubmit({ title, content, categoryId, imageUrl });
     } else {
       console.error("onSubmit is not a function");
     }
@@ -33,6 +50,24 @@ const PostForm = ({ onSubmit }) => {
         <input type="text" className="form-control" id="imageUrl" value={imageUrl}
           onChange={(e) => setImageUrl(e.target.value)} />
       </div>
+
+      <div className="mb-3">
+        <label htmlFor="category">Category</label>
+        <select
+          id="category"
+          className="form-control"
+          value={categoryId}
+          onChange={e => setCategoryId(Number(e.target.value))}
+          required
+        >
+          {categories.map(c => (
+            <option key={c.CategoryId} value={c.CategoryId}>
+              {c.Name}
+            </option>
+          ))}
+        </select>
+      </div>
+
       <button type="submit" className="btn btn-warning">Create Post</button>
     </form>
   );

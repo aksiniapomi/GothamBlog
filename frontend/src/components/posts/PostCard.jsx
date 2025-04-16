@@ -27,6 +27,7 @@ const PostCard = ({ post }) => {
     if (title.includes('lives')) return '/posts-images/catwoman.jpg';
     if (title.includes('joker')) return '/posts-images/joker.jpg';
     if (title.includes('gotham')) return '/posts-images/gotham-default.jpg';
+    if (title.includes('jewel')) return '/posts-images/catwomanjewels.jpg'; 
     
     return '/post-images/gotham-default.jpg'; 
   };
