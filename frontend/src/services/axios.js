@@ -5,6 +5,20 @@ const API = axios.create({
   withCredentials: true, //sends cookies like JWT with request; allows the frontend to send the jwt cookie 
 });
 
+//Inject JWT from cookie into Authorization header
+API.interceptors.request.use(
+  (config) => {
+    // Parse the document.cookie string to find the jwt cookie
+    const jwtCookie = document.cookie.split('; ').find(row => row.startsWith('jwt='));
+    if (jwtCookie) {
+      const token = jwtCookie.split('=')[1];
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => Promise.reject(error)
+);
+
 // Response interceptor 
 API.interceptors.response.use(   //handle responses globally/ show meesages or log out if 401 
   response => response,

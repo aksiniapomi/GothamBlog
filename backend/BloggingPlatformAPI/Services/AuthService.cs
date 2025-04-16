@@ -76,13 +76,32 @@ namespace GothamPostBlogAPI.Services
             {
                 _logger.LogInformation("Generating JWT token for user with ID {UserId}", user.UserId); // Log JWT generation attempt
 
+                // Role mapping dictionary: converts numeric enum value (as string) to descriptive role name.
+                var roleMap = new Dictionary<string, string>
+             {
+            { "0", "Admin" },
+            { "1", "RegisteredUser" },
+            { "2", "Reader" }
+            };
+
+                _logger.LogInformation("User role from DB: {UserRole}", user.Role.ToString());
+
+                // Convert the user's role to string using the map.
+                // Use the map if it contains the key; otherwise fall back to user.Role.ToString()
+                var roleString = roleMap.ContainsKey(user.Role.ToString()) ? roleMap[user.Role.ToString()] : user.Role.ToString();
+                _logger.LogInformation("Using role string: {RoleString}", roleString);
+
+
                 var tokenDescriptor = new SecurityTokenDescriptor
                 {
                     Subject = new ClaimsIdentity(new[]
                     {
-                        new Claim(ClaimTypes.Name, user.UserId.ToString()), // Store User ID as Name claim
-                        new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString()), // Store User ID
-                       new Claim(ClaimTypes.Role, user.Role.ToString()), // Store Role (Admin/User) 
+                    new Claim(ClaimTypes.Name, user.UserId.ToString()), // Store User ID as Name claim
+                    new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString()), // Store User ID
+                    
+                    // Use the mapped role string instead of user.Role.ToString()
+                    new Claim(ClaimTypes.Role, roleString)
+                    //new Claim(ClaimTypes.Role, user.Role.ToString()), // Store Role (Admin/User) 
                     }),
 
                     Expires = DateTime.UtcNow.AddHours(2), // Token expires in 2 hours

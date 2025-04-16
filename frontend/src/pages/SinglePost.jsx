@@ -4,8 +4,8 @@ import API from '../services/axios';
 import './styles/SinglePost.css';
 import { format } from 'date-fns';
 import { useNavigate } from 'react-router-dom';
-import { getCommentsForPost } from '../services/commentService';
 import { AuthContext } from '../context/AuthContext';
+import { getCommentsForPost, createComment } from '../services/commentService';
 
 const getImageForPost = (post) => {
     const title = (post.Title || "").toLowerCase();
@@ -56,17 +56,18 @@ const formatDate = (dateString) => {
   if (error) return <p className="text-danger">{error}</p>;
   if (!post) return <p>Loading...</p>;
 
-const handleCommentSubmit = async () => {
-  try {
-    await API.post('/Comment', {
-      CommentContent: commentInput,
-      BlogPostId: post.BlogPostId
-    });
-    setCommentInput('');
-  } catch (error) {
-    console.error('Failed to post comment:', error);
-  }
-};
+  const handleCommentSubmit = async () => {
+    try {
+      await createComment(commentInput, post.BlogPostId);
+      setCommentInput('');
+
+      //re-fetch comments to show the new one
+      const updated = await getCommentsForPost(post.BlogPostId);
+      setComments(updated);
+    } catch (error) {
+      console.error('Failed to post comment:', error);
+    }
+  };
 
   return (
     <div className="single-post-page">

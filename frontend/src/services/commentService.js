@@ -10,3 +10,16 @@ export const getCommentsForPost = async (postId) => {
     throw error;
   }
 };
+
+export const createComment = async (commentContent, postId) => {
+    try {
+      const response = await API.post('/Comment', {
+        CommentContent: commentContent,
+        BlogPostId: postId,
+      });
+      return response.data;
+    } catch (error) {
+      console.error('Failed to create comment:', error);
+      throw error;
+    }
+  };
