@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import API from '../services/axios';
 import './styles/SinglePost.css';
 import { format } from 'date-fns';
+import { useNavigate } from 'react-router-dom';
 
 const getImageForPost = (post) => {
     const title = (post.Title || "").toLowerCase();
@@ -18,6 +19,7 @@ const getImageForPost = (post) => {
 
 const SinglePost = () => {
   const { id } = useParams(); // get post ID from URL
+  const navigate = useNavigate();
   const [post, setPost] = useState(null);
   const [error, setError] = useState('');
 
@@ -49,11 +51,14 @@ const formatDate = (dateString) => {
   return (
     <div className="single-post-page">
     <div className="single-post-container">
+    <button onClick={() => navigate('/posts')} className="back-button">
+     ← Back to Posts
+    </button>
       <h2 className="single-post-title">{post.Title}</h2>
       <p className="single-post-meta">
       By: <span className="font-semibold">{post.Username || 'Unknown'}</span> | {formatDate(post.DateCreated)}
       </p>
-      
+
       <img
         src={getImageForPost(post)}
         alt="Blog visual"
