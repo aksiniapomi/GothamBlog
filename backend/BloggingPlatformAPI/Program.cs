@@ -259,8 +259,8 @@ app.Use(async (context, next) =>
 
 app.UseCors("AllowFrontend");
 
-app.UseAuthorization();
 app.UseAuthentication();
+app.UseAuthorization();
 
 app.UseIpRateLimiting(); // Enable rate limiting
 
