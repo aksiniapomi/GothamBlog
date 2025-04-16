@@ -3,6 +3,7 @@
 import React from 'react';
 import { format } from 'date-fns';
 import PostCard from './PostCard';
+import { Link } from 'react-router-dom';
 
 const PostList = ({ posts = [] }) => {
   if (!Array.isArray(posts) || posts.length === 0) {
@@ -31,8 +32,14 @@ const PostList = ({ posts = [] }) => {
   return (
     <div className="post-list">
       {posts.map((post) => (
-  <PostCard key={post.BlogPostId} post={post} />
-))}
+        <Link
+          to={`/post/${post.BlogPostId}`}
+          key={post.BlogPostId}
+          className="post-link"
+        >
+          <PostCard post={post} />
+        </Link>
+      ))}
     </div>
   );
 };

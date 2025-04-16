@@ -37,3 +37,11 @@
 .post-card .content {
   color: #dddddd;
 }
+
+.posts-page {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem; /* adds space between cards */
+  align-items: center;
+  padding: 2rem 1rem;
+}

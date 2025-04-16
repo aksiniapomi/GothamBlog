@@ -12,7 +12,7 @@ import ErrorPage from './pages/ErrorPage';
 import PostForm from './components/posts/PostForm';
 import Footer from './components/Footer';
 import CreatePost from './components/posts/CreatePost';
-
+import SinglePost from './pages/SinglePost';
 
 const App = () => {
   return (
@@ -31,6 +31,7 @@ const App = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/posts" element={<Posts />} />
+        <Route path="/post/:id" element={<SinglePost />} />
         
         {/*Protected route - any logged in user */}
         <Route path="/create-post" element={

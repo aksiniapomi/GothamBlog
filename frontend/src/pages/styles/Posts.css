@@ -16,16 +16,19 @@
 }
 
 .posts-page {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  padding: 2rem 1rem;
 }
 
 .post-list {
+  width: 100%;
+  max-width: 800px;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  gap: 30px;
+  gap: 2rem;
 }
 
 .post-card {
@@ -78,3 +81,13 @@
 .create-post-button:hover {
   background-color: #fbbf24;
 }
+.post-link {
+  text-decoration: none;
+  color: inherit;
+}
+
+.post-link:hover {
+  text-decoration: none;
+  color: #c5c6c7; 
+}
+
