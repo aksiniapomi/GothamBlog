@@ -40,7 +40,7 @@
     border-radius: 0.75rem;
     margin: 1.5rem 0;
   }
-  
+
   .back-button {
     background-color: #facc15;
     color: #1b1b1b;
@@ -55,4 +55,55 @@
   
   .back-button:hover {
     background-color: #fbbf24;
+  }
+
+  .comments-section {
+    margin-top: 2rem;
+  }
+  
+  .comment {
+    padding: 0.75rem 1rem;
+    background: #2c2c2c;
+    border-radius: 0.5rem;
+    margin-bottom: 1rem;
+    color: #eee;
+  }
+  
+  .back-button {
+    margin-top: 2rem;
+    padding: 0.6rem 1.2rem;
+    background-color: #facc15;
+    color: #1b1b1b;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  .back-button:hover {
+    background-color: #fbbf24;
+  }
+
+  .comment-form {
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .comment-form textarea {
+    padding: 1rem;
+    border-radius: 0.5rem;
+    resize: vertical;
+    background: #1b1b1b;
+    color: white;
+    border: 1px solid #444;
+  }
+  
+  .comment-form button {
+    margin-top: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: #facc15;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
   }

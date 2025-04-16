@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import API from '../services/axios';
 import './styles/SinglePost.css';
 import { format } from 'date-fns';
 import { useNavigate } from 'react-router-dom';
 import { getCommentsForPost } from '../services/commentService';
+import { AuthContext } from '../context/AuthContext';
 
 const getImageForPost = (post) => {
     const title = (post.Title || "").toLowerCase();
@@ -24,6 +25,8 @@ const SinglePost = () => {
   const [post, setPost] = useState(null);
   const [comments, setComments] = useState([]);
   const [error, setError] = useState('');
+  const [commentInput, setCommentInput] = useState("");
+  const { user } = useContext(AuthContext);
 
 const formatDate = (dateString) => {
     try {
@@ -53,12 +56,25 @@ const formatDate = (dateString) => {
   if (error) return <p className="text-danger">{error}</p>;
   if (!post) return <p>Loading...</p>;
 
+const handleCommentSubmit = async () => {
+  try {
+    await API.post('/Comment', {
+      CommentContent: commentInput,
+      BlogPostId: post.BlogPostId
+    });
+    setCommentInput('');
+  } catch (error) {
+    console.error('Failed to post comment:', error);
+  }
+};
+
   return (
     <div className="single-post-page">
     <div className="single-post-container">
     <button onClick={() => navigate('/posts')} className="back-button">
      ← Back to Posts
     </button>
+
       <h2 className="single-post-title">{post.Title}</h2>
       <p className="single-post-meta">
       By: <span className="font-semibold">{post.Username || 'Unknown'}</span> | {formatDate(post.DateCreated)}
@@ -85,6 +101,20 @@ const formatDate = (dateString) => {
             ))
           )}
         </div>
+
+        {user ? (
+        <div className="comment-form">
+          <textarea
+            value={commentInput}
+            onChange={(e) => setCommentInput(e.target.value)}
+            placeholder="Share your thoughts..."
+            rows={4}
+          />
+          <button onClick={handleCommentSubmit}>Post Comment</button>
+        </div>
+      ) : (
+        <p className="login-reminder"> Please log in to post a comment.</p>
+      )}
 
         <button className="back-button" onClick={() => navigate('/posts')}>← Back to Posts</button>
       </div>
