@@ -31,11 +31,11 @@ export async function getBlogPostById(id) {
   return data;
 }
 
-export async function updatePost(id, { title, content, categoryId }) {
+export async function updatePost(id, postData) {
   const payload = {
-    Title:      title,
-    Content:    content,
-    CategoryId: categoryId
+    Title:      postData.title,
+    Content:    postData.content,
+    CategoryId: postData.categoryId
   };
   const { data } = await api.put(`/blogpost/${id}`, payload);
   return data;
