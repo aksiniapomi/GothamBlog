@@ -3,7 +3,7 @@ import { createPost } from '../../services/postService';
 import PostForm from './PostForm';
 import { getCategories } from '../../services/categoryService';
 import React, { useState, useEffect } from 'react';
-import './CreatePost.css';
+import './CreateEditPost.css';
 
 const CreatePost = () => {
   const navigate = useNavigate();
@@ -25,17 +25,17 @@ const CreatePost = () => {
 
   return (
     <div className="create-post-page">
-     <div className="inner-container">
-     <h1 className="page-heading">Create Post</h1>
-     <div className="form-container">
-     <PostForm
-       categories={categories}
-       onSubmit={handleCreatePost}
-   />
+      <div className="inner-container">
+        <h1 className="page-heading">Create Post</h1>
+        <div className="form-container">
+          <PostForm
+            categories={categories}
+            onSubmit={handleCreatePost}
+          />
+        </div>
+      </div>
     </div>
-     </div>
-     </div>
-       );
-     };
+  );
+};
 
 export default CreatePost;

@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import { getCommentsForPost, createComment, deleteComment } from '../services/commentService';
 import { getLikes, createLike, deleteLike } from '../services/likeService';
+import { updatePost, deletePost } from '../services/postService';
 
 const getImageForPost = (post) => {
   const title = (post.Title || "").toLowerCase();
@@ -46,7 +47,6 @@ const SinglePost = () => {
 
   useEffect(() => {
     let cancelled = false;
-
     //load post & comments in parallel
     const loadContent = async () => {
       try {
@@ -131,9 +131,31 @@ const SinglePost = () => {
     }
   };
 
+  const handleDelete = async () => {
+    if (!confirm('Ready to delete this post?')) return;
+    await deletePost(post.BlogPostId);
+    navigate('/posts');
+  };
+
+  const handleEdit = () => {
+    navigate(`/edit-post/${post.BlogPostId}`);
+  };
+
   return (
     <div className="single-post-page">
       <div className="single-post-container">
+
+        {user && (user.UserId === post.UserId || user.Role === 'Admin') && (
+          <div className="post-actions">
+            <button className="btn btn-sm btn-outline-warning" onClick={handleEdit}>
+              Edit
+            </button>
+            <button className="btn btn-sm btn-outline-danger ms-2" onClick={handleDelete}>
+              Delete
+            </button>
+          </div>
+        )}
+
         <button onClick={() => navigate('/posts')} className="back-button">
           ← Back to Posts
         </button>

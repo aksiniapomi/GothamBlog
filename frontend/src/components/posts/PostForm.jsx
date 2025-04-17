@@ -2,11 +2,11 @@
 import React, { useState, useEffect } from 'react';
 import { getCategories } from '../../services/categoryService';
 
-const PostForm = ({ onSubmit }) => {
+const PostForm = ({ onSubmit, initialValues }) => {
   const [title, setTitle] = useState('');
-  const [content, setContent] = useState('');
   const [categories, setCategories] = useState([]);
-  const [categoryId, setCategoryId] = useState('');
+  const [content, setContent] = useState(initialValues?.content || '');
+  const [categoryId, setCategoryId] = useState(initialValues?.categoryId || '');
 
   // fetch categories on mount 
   useEffect(() => {

@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from './axios';
 
 const api = axios.create({
   baseURL: 'http://localhost:5113/api',
@@ -24,4 +24,23 @@ export const createPost = async ({ title, content, categoryId }) => {
     CategoryId: categoryId
   });
   return resp.data;
+};
+
+export async function getBlogPostById(id) {
+  const { data } = await api.get(`/blogPost/${id}`);
+  return data;
+}
+
+export async function updatePost(id, { title, content, categoryId }) {
+  const payload = {
+    Title:      title,
+    Content:    content,
+    CategoryId: categoryId
+  };
+  const { data } = await api.put(`/blogpost/${id}`, payload);
+  return data;
+}
+
+export const deletePost = async (id) => {
+  await api.delete(`/blogpost/${id}`);
 };

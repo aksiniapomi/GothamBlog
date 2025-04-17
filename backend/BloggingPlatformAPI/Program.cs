@@ -120,8 +120,8 @@ builder.Services.Configure<IpRateLimitOptions>(options =>
         new RateLimitRule
         {
             Endpoint = "*",
-            Period = "1m", //1 minute
-            Limit = 10 //Allow max 10 requests per minute
+            Period = "30s", //1 minute
+            Limit = 20 //Allow max 10 requests per minute
         }
     };
 });
