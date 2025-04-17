@@ -1,7 +1,3 @@
-[![Build Status](https://github.com/yourusername/GothamBlog/actions/workflows/frontend-ci-cd.yml/badge.svg)](https://github.com/yourusername/GothamBlog/actions/workflows/frontend-ci-cd.yml) 
-[![Coverage](https://img.shields.io/codecov/c/github/yourusername/GothamBlog?logo=codecov)](https://codecov.io/gh/yourusername/GothamBlog) 
-[![Deploy](https://img.shields.io/badge/GH--Pages-deployed-blue)](https://aksiniapomi.github.io/GothamBlog/)
-
 # Gotham Blog Frontend 🦇📰
 
 > A single-page React application connected to the **Gotham Blog API**.  
