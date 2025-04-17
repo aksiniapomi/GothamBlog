@@ -5,7 +5,7 @@ import './styles/SinglePost.css';
 import { format } from 'date-fns';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
-import { getCommentsForPost, createComment } from '../services/commentService';
+import { getCommentsForPost, createComment, deleteComment } from '../services/commentService';
 import { getLikes, createLike, deleteLike } from '../services/likeService';
 
 const getImageForPost = (post) => {
@@ -122,6 +122,15 @@ const SinglePost = () => {
   if (error) return <p className="text-danger">{error}</p>;
   if (!post) return <p>Loading...</p>;
 
+  const handleDeleteComment = async (commentId) => {
+    try {
+      await deleteComment(commentId);
+      setComments(cs => cs.filter(c => c.CommentId !== commentId));
+    } catch (e) {
+      console.error('delete failed', e);
+    }
+  };
+
   return (
     <div className="single-post-page">
       <div className="single-post-container">
@@ -154,34 +163,42 @@ const SinglePost = () => {
         <hr />
         <div className="comments-section">
           <h4>💬 Comments</h4>
-          {comments.length === 0 ? (
-            <p>No comments yet. Be the first to comment!</p>
+          {comments.map(c => (
+            <div key={c.CommentId} className="comment">
+              <p>
+                <strong>{c.User.Username}</strong>: {c.CommentContent}
+                {user.Role === 0 && (
+                  <button
+                    type="button"
+                    className="delete-comment-btn"
+                    onClick={() => handleDeleteComment(c.CommentId)}
+                    aria-label="Delete comment"
+                  >
+                    🗑️ <span className="delete-comment-text">Delete comment?</span>
+                  </button>
+                )}
+              </p>
+            </div>
+          ))
+          }
+
+          {user ? (
+            <div className="comment-form">
+              <textarea
+                value={commentInput}
+                onChange={(e) => setCommentInput(e.target.value)}
+                placeholder="Share your thoughts..."
+                rows={4}
+              />
+              <button onClick={handleCommentSubmit}>Post Comment</button>
+            </div>
           ) : (
-            comments.map((comment) => (
-              <div key={comment.CommentId} className="comment">
-                <p><strong>{comment?.User?.Username || 'Anonymous'}</strong>:</p>
-                <p>{comment.CommentContent}</p>
-              </div>
-            ))
+            <p className="login-reminder"> Please log in to post a comment.</p>
           )}
+
+          <button className="back-button" onClick={() => navigate('/posts')}>← Back to Posts</button>
         </div>
-
-        {user ? (
-          <div className="comment-form">
-            <textarea
-              value={commentInput}
-              onChange={(e) => setCommentInput(e.target.value)}
-              placeholder="Share your thoughts..."
-              rows={4}
-            />
-            <button onClick={handleCommentSubmit}>Post Comment</button>
-          </div>
-        ) : (
-          <p className="login-reminder"> Please log in to post a comment.</p>
-        )}
-
-        <button className="back-button" onClick={() => navigate('/posts')}>← Back to Posts</button>
-      </div>
+      </div >
     </div >
   );
 };

@@ -23,3 +23,8 @@ export const createComment = async (commentContent, postId) => {
       throw error;
     }
   };
+
+export const deleteComment = (commentId) =>
+     API.delete(`/Comment/${commentId}`);
+
+// <p><strong>{comment?.User?.Username || 'Anonymous'}</strong>:</p>
