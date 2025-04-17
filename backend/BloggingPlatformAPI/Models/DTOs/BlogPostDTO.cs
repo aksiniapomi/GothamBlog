@@ -29,5 +29,10 @@ namespace GothamPostBlogAPI.Models.DTOs
         public int UserId { get; set; } //User who wrote the post (ID only)
 
         public required string Username { get; set; } //To display author without exposing full User object
+
+        public int CategoryId { get; set; } //to be able to display the category in the frontend for the posts 
+
+        public string CategoryName { get; set; } = null!;
+
     }
 }

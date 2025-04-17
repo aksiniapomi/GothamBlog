@@ -6,6 +6,7 @@ using Microsoft.Extensions.Logging; // Required for logging
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace GothamPostBlogAPI.Services
 {
@@ -54,6 +55,7 @@ namespace GothamPostBlogAPI.Services
             var blogPosts = await _context.BlogPosts
                 .AsNoTracking()
                 .Include(bp => bp.User)
+                .Include(bp => bp.Category)
                 .OrderByDescending(bp => bp.DateCreated)
                 .ToListAsync();
 
@@ -66,7 +68,9 @@ namespace GothamPostBlogAPI.Services
                 Content = bp.Content,
                 DateCreated = bp.DateCreated,
                 UserId = bp.UserId,
-                Username = bp.User?.Username ?? "Anonymous"
+                Username = bp.User?.Username ?? "Anonymous",
+                CategoryId = bp.CategoryId,
+                CategoryName = bp.Category?.Name ?? "Unknown"
             }).ToList();
 
             return dtoList;
@@ -99,7 +103,9 @@ namespace GothamPostBlogAPI.Services
                     Content = blogPost.Content,
                     DateCreated = blogPost.DateCreated,
                     UserId = blogPost.UserId,
-                    Username = blogPost.User?.Username ?? "Unknown User"
+                    Username = blogPost.User?.Username ?? "Unknown User",
+                    CategoryId = blogPost.CategoryId,
+                    CategoryName = blogPost.Category?.Name ?? "Unknown"
                 };
 
                 return blogPostDto;

@@ -24,8 +24,8 @@ const PostList = ({ posts = [] }) => {
 
   const renderContent = (content) => {
     if (!content) return 'No content available';
-    return content.length > 150 
-      ? `${content.substring(0, 150)}...` 
+    return content.length > 150
+      ? `${content.substring(0, 150)}...`
       : content;
   };
 

@@ -15,6 +15,7 @@ import CreatePost from './components/posts/CreatePost';
 import SinglePost from './pages/SinglePost';
 
 const App = () => {
+
   return (
       <AuthProvider>
         <Navbar />
