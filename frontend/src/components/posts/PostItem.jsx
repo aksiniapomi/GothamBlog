@@ -1,5 +1,5 @@
 //display a single post (title, author, etc.) with comments and likes
-//simpler than PostCard and is great for showing posts in a table, sidebar, or list layout
+//simpler than PostCard; for showing posts in a table, sidebar, or list layout
 
 import React from 'react';
 

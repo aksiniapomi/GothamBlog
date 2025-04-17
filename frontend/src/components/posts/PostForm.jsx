@@ -8,20 +8,20 @@ const PostForm = ({ onSubmit }) => {
   const [categories, setCategories] = useState([]);
   const [categoryId, setCategoryId] = useState('');
 
- // fetch categories on mount 
- useEffect(() => {
-  async function load() {
-    try {
-      const cats = await getCategories();
-      setCategories(cats);
-      // 2) default to first one
-      if (cats.length) setCategoryId(cats[0].CategoryId);
-    } catch (err) {
-      console.error('Could not load categories', err);
+  // fetch categories on mount 
+  useEffect(() => {
+    async function load() {
+      try {
+        const cats = await getCategories();
+        setCategories(cats);
+        // default to first one
+        if (cats.length) setCategoryId(cats[0].CategoryId);
+      } catch (err) {
+        console.error('Could not load categories', err);
+      }
     }
-  }
-  load();
-}, []);
+    load();
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -33,21 +33,21 @@ const PostForm = ({ onSubmit }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="p-4 bg-dark text-light">
+    <form onSubmit={handleSubmit} className="p-4 text-light">
       <div className="mb-3">
-        <label htmlFor="title">Title</label>
+        <label htmlFor="title" className="form-label fw-bold">Title</label>
         <input type="text" className="form-control" id="title" value={title}
           onChange={(e) => setTitle(e.target.value)} />
-      
+
       </div>
       <div className="mb-3">
-        <label htmlFor="content">Content</label>
+        <label htmlFor="content" className="form-label fw-bold">Content</label>
         <textarea className="form-control" id="content" rows="4" value={content}
           onChange={(e) => setContent(e.target.value)} />
       </div>
-    
+
       <div className="mb-3">
-        <label htmlFor="category">Category</label>
+        <label htmlFor="category" className="form-label fw-bold">Category</label>
         <select
           id="category"
           className="form-control"
@@ -63,7 +63,7 @@ const PostForm = ({ onSubmit }) => {
         </select>
       </div>
 
-      <button type="submit" className="btn btn-warning">Create Post</button>
+      <button type="submit" className="btn btn-warning fw-bold">Create Post</button>
     </form>
   );
 };
