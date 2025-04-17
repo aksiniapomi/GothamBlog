@@ -8,48 +8,48 @@
 
 ## 🚀 Features
 
-- **Responsive SPA** (mobile & desktop) using React Router & Bootstrap  
-- **JWT Authentication** (Register / Login)  
-- **CRUD** on Blog Posts (create, edit, delete)  
-- **Commenting** & **Liking** per post (per‑user state)  
-- **Admin Dashboard** for listing & removing users  
-- **Context API** for global auth & like‑state  
-- **Loading** and **Error** states on all API calls  
+- **Responsive SPA** (mobile & desktop) using React Router & Bootstrap
+- **JWT Authentication** (Register / Login)
+- **CRUD** on Blog Posts (create, edit, delete)
+- **Commenting** & **Liking** per post (per‑user state)
+- **Admin Dashboard** for listing & removing users
+- **Context API** for global auth & like‑state
+- **Loading** and **Error** states on all API calls
 - Gotham‑themed UI with **Bangers** comic font
 
 ---
 
 ## 🧭 Pages & Navigation
 
-| Path             | Page                        | Access           | Description                                         |
-| ---------------- | --------------------------- | ---------------- | --------------------------------------------------- |
-| `/`              | Home                        | Public           | Welcome banner + featured posts                     |
-| `/login`         | Login                       | Public           | Authenticate and receive JWT                        |
-| `/register`      | Register                    | Public           | Create a new account                                |
-| `/posts`         | All Blog Posts              | Public           | Browse all posts in reverse chronological order     |
-| `/post/:id`      | View Single Post            | Public           | Read full post, like, and comment                   |
-| `/create-post`   | Create Post                 | Logged‑in only   | Fill form to submit a new blog post                 |
-| `/edit-post/:id` | Edit Post                   | Author & Admin   | Update title, content, category                     |
-| `/admin`         | Admin Dashboard (User List) | Admin only       | View and remove registered users                    |
-| `/error`         | Error / Fallback Page       | All users        | Catches unknown routes                              |
+| Path             | Page                        | Access         | Description                                     |
+| ---------------- | --------------------------- | -------------- | ----------------------------------------------- |
+| `/`              | Home                        | Public         | Welcome banner + featured posts                 |
+| `/login`         | Login                       | Public         | Authenticate and receive JWT                    |
+| `/register`      | Register                    | Public         | Create a new account                            |
+| `/posts`         | All Blog Posts              | Public         | Browse all posts in reverse chronological order |
+| `/post/:id`      | View Single Post            | Public         | Read full post, like, and comment               |
+| `/create-post`   | Create Post                 | Logged‑in only | Fill form to submit a new blog post             |
+| `/edit-post/:id` | Edit Post                   | Author & Admin | Update title, content, category                 |
+| `/admin`         | Admin Dashboard (User List) | Admin only     | View and remove registered users                |
+| `/error`         | Error / Fallback Page       | All users      | Catches unknown routes                          |
 
 ---
 
 ## 🛠️ Tech Stack
 
-- **React** 18 + **Vite**  
-- **React Router** for client‑side routing  
-- **Bootstrap 5** for layout & components  
-- **Axios** for HTTP requests  
-- **Context API** for global state  
-- **date‑fns** for formatting  
-- **Bangers** Google Font for headings  
+- **React** 18 + **Vite**
+- **React Router** for client‑side routing
+- **Bootstrap 5** for layout & components
+- **Axios** for HTTP requests
+- **Context API** for global state
+- **date‑fns** for formatting
+- **Bangers** Google Font for headings
 
 ---
 
 ## 📦 Prerequisites
 
-- **Node.js** ≥ 16 & **npm**  
+- **Node.js** ≥ 16 & **npm**
 - A running **Gotham Blog API** on `http://localhost:5113`  
   (see [backend README](../backend/README.md))
 
@@ -57,9 +57,10 @@
 
 ## ⚙️ Installation & Development
 
-1. **Clone the repo**  
+1. **Clone the repo**
+
    ```bash
-   git clone https://github.com/yourusername/GothamBlog.git
+   git clone https://github.com/aksiniapomi/GothamBlog.git
    cd GothamBlog/frontend
    ```
 
@@ -143,4 +144,3 @@ frontend/
 
 This project is submitted for academic assessment.  
 All code is my own work and adheres to academic integrity standards.
-
