@@ -1,6 +1,6 @@
+
 name: React Frontend CI/CD
 
-# only run when files under frontend/ (or this workflow) change
 on:
   push:
     branches: [ main ]
@@ -14,20 +14,19 @@ on:
       - '.github/workflows/frontend-ci-cd.yml'
 
 permissions:
-  contents: read   # for checkout
-  pages: write     # to push to gh-pages
-  id-token: write  
+  contents: read
+  pages: write
+  id-token: write
 
 jobs:
-  build_and_deploy:
+  pages:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0
 
-      - name: Setup Node.js 18
+      - name: Use Node.js 18
         uses: actions/setup-node@v3
         with:
           node-version: '18'
