@@ -6,38 +6,42 @@ on:
   pull_request:
     branches: [ main ]
 
-
 permissions:
-  contents: read      # allow checking out code
-  pages: write        # allow writing to gh-pages
-  id-token: write    
+  contents: read     
+  pages: write          
+  id-token: write       
 
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout Code
+      - name: Checkout code
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
 
-      - name: Set up Node.js
+      - name: Use Node.js 18
         uses: actions/setup-node@v3
         with:
-          node-version: '18'
+          node-version: 18
 
-      - name: Install Dependencies
+      - name: Install dependencies
         run: npm ci
         working-directory: frontend
 
-      - name: Build the React App
+      - name: Build
         run: npm run build
         working-directory: frontend
 
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
+      # --- GitHub Pages deployment ---
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v3
+
+      - name: Upload artifact for Pages
+        uses: actions/upload-pages-artifact@v1
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./frontend/dist
-          user_name: 'github-actions[bot]'
-          user_email: 'github-actions[bot]@users.noreply.github.com'
+          path: ./frontend/build   
+
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v1
