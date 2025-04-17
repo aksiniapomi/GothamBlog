@@ -5,7 +5,7 @@ import React from 'react';
 import './PostCard.css';
 import { format } from 'date-fns';
 
-const PostCard = ({ post = [] }) => {
+const PostCard = ({ post, likedMap, onToggleLike }) => {
   const formatDate = (dateString) => {
     try {
       return dateString ? format(new Date(dateString), 'dd/MM/yyyy') : 'Unknown Date';
@@ -33,13 +33,30 @@ const PostCard = ({ post = [] }) => {
     return '/posts-images/gotham-default.jpg';
   };
 
+  const isLiked = likedMap.has(post.BlogPostId);
+
   return (
     <div className="post-card">
+
       <img src={getImageForPost(post)}
         alt="Post visual"
       />
+
       <div className="post-card-header">
         <h3>{post.Title || 'Untitled Gotham Story'}</h3>
+
+        <button
+          className="heart-button"
+          onClick={e => {
+            e.preventDefault();      // stop the <Link> navigation
+            e.stopPropagation();
+            onToggleLike(post.BlogPostId);
+          }}
+          aria-label={isLiked ? 'Unlike' : 'Like'}
+        >
+          {isLiked ? '❤️' : '🤍'}
+        </button>
+
         <span className="category-badge">{categoryName}</span>
       </div>
 

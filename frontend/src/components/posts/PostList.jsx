@@ -5,7 +5,7 @@ import { format } from 'date-fns';
 import PostCard from './PostCard';
 import { Link } from 'react-router-dom';
 
-const PostList = ({ posts = [] }) => {
+const PostList = ({ posts = [], categories, likedMap, onToggleLike }) => {
   if (!Array.isArray(posts) || posts.length === 0) {
     return (
       <div className="no-posts">
@@ -37,7 +37,12 @@ const PostList = ({ posts = [] }) => {
           key={post.BlogPostId}
           className="post-link"
         >
-          <PostCard post={post} />
+          <PostCard
+            post={post}
+            categories={categories}
+            likedMap={likedMap}
+            onToggleLike={onToggleLike}
+          />
         </Link>
       ))}
     </div>
