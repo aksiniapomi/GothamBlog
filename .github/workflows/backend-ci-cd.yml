@@ -1,39 +1,45 @@
-name: CI/CD Pipeline
+name: .NET Core Backend CI/CD
 
+# only run when files under backend/ (or this workflow) change
 on:
   push:
-    branches:
-      - main
+    branches: [ main ]
+    paths:
+      - 'backend/**'
+      - '.github/workflows/backend-ci-cd.yml'
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'backend/**'
+      - '.github/workflows/backend-ci-cd.yml'
 
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Set up .NET 9.0
+      - name: Setup .NET 9.0
         uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: "9.0.x"
+          dotnet-version: '9.0.x'
 
       - name: Restore Dependencies
         run: dotnet restore
         working-directory: backend/BloggingPlatformAPI
 
-      - name: Build the Project
+      - name: Build
         run: dotnet build --configuration Release --no-restore
         working-directory: backend/BloggingPlatformAPI
 
-      - name: Run Unit Tests
+      - name: Test
         run: dotnet test --no-restore --verbosity normal
         working-directory: backend/BloggingPlatformAPI
 
   docker:
     needs: build
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -49,6 +55,6 @@ jobs:
           docker build -t ${{ secrets.DOCKER_USERNAME }}/bloggingplatformapi:latest .
         working-directory: backend/BloggingPlatformAPI
 
-      - name: Push Docker Image to Docker Hub
+      - name: Push Docker Image
         run: |
           docker push ${{ secrets.DOCKER_USERNAME }}/bloggingplatformapi:latest
