@@ -1,65 +1,59 @@
+[![Build Status](https://github.com/yourusername/GothamBlog/actions/workflows/frontend-ci-cd.yml/badge.svg)](https://github.com/yourusername/GothamBlog/actions/workflows/frontend-ci-cd.yml) 
+[![Coverage](https://img.shields.io/codecov/c/github/yourusername/GothamBlog?logo=codecov)](https://codecov.io/gh/yourusername/GothamBlog) 
+[![Deploy](https://img.shields.io/badge/GH--Pages-deployed-blue)](https://aksiniapomi.github.io/GothamBlog/)
+
 # Gotham Blog Frontend 🦇📰
 
 > A single-page React application connected to the **Gotham Blog API**.  
-> Explore Gotham's digital newspaper — where stories of heroes, villains,  
-> and citizens collide. Users can post, comment, like... or manage the mayhem (if you're an Admin).
+> Explore Gotham's digital newspaper—where stories of heroes, villains,  
+> and citizens collide. Users can post, comment, like… or manage the mayhem (if you’re an Admin).
 
 ---
 
 ## 🚀 Features
 
-- **Responsive SPA** (mobile & desktop) using React Router & Bootstrap
-- **JWT Authentication** (Register / Login)
-- **CRUD** on Blog Posts (create, edit, delete)
-- **Commenting** & **Liking** per post (per-user state)
-- **Admin Dashboard** for listing & removing users
-- **Context API** for global auth & like-state
-- **Loading** and **Error** states on all API calls
-- Gotham-themed UI with **Bangers** comic font
-
----
-
-## 📖 App Overview
-
-**Gotham Blog** is a dark-themed citywide blogging platform set in the heart of Gotham.  
-From anonymous vigilantes to curious citizens, everyone has a voice.
-
-Create posts, debate in comments, and uncover the latest tales of corruption, justice, or chaos.  
-Admins patrol the system — keeping order by managing users.
+- **Responsive SPA** (mobile & desktop) using React Router & Bootstrap  
+- **JWT Authentication** (Register / Login)  
+- **CRUD** on Blog Posts (create, edit, delete)  
+- **Commenting** & **Liking** per post (per‑user state)  
+- **Admin Dashboard** for listing & removing users  
+- **Context API** for global auth & like‑state  
+- **Loading** and **Error** states on all API calls  
+- Gotham‑themed UI with **Bangers** comic font
 
 ---
 
 ## 🧭 Pages & Navigation
 
-| Path             | Page                        | Access         |
-| ---------------- | --------------------------- | -------------- |
-| `/`              | Home                        | Public         |
-| `/login`         | Login                       | Public         |
-| `/register`      | Register                    | Public         |
-| `/posts`         | All Blog Posts              | Public         |
-| `/post/:id`      | View Single Post            | Public         |
-| `/create-post`   | Create Post                 | Logged-in only |
-| `/edit-post/:id` | Edit Post                   | Author only    |
-| `/admin`         | Admin Dashboard (User List) | Admin only     |
-| `/error`         | Error/Fallback Page         | All users      |
+| Path             | Page                        | Access           | Description                                         |
+| ---------------- | --------------------------- | ---------------- | --------------------------------------------------- |
+| `/`              | Home                        | Public           | Welcome banner + featured posts                     |
+| `/login`         | Login                       | Public           | Authenticate and receive JWT                        |
+| `/register`      | Register                    | Public           | Create a new account                                |
+| `/posts`         | All Blog Posts              | Public           | Browse all posts in reverse chronological order     |
+| `/post/:id`      | View Single Post            | Public           | Read full post, like, and comment                   |
+| `/create-post`   | Create Post                 | Logged‑in only   | Fill form to submit a new blog post                 |
+| `/edit-post/:id` | Edit Post                   | Author & Admin   | Update title, content, category                     |
+| `/admin`         | Admin Dashboard (User List) | Admin only       | View and remove registered users                    |
+| `/error`         | Error / Fallback Page       | All users        | Catches unknown routes                              |
 
 ---
 
 ## 🛠️ Tech Stack
 
-- **React** 18 + **Vite**
-- **React Router** for client-side routing
-- **Bootstrap 5** for layout & components
-- **Axios** for HTTP requests
-- **Context API** for global state
-- **date-fns** for formatting
-- **Bangers** Google Font for headings
+- **React** 18 + **Vite**  
+- **React Router** for client‑side routing  
+- **Bootstrap 5** for layout & components  
+- **Axios** for HTTP requests  
+- **Context API** for global state  
+- **date‑fns** for formatting  
+- **Bangers** Google Font for headings  
 
 ---
 
 ## 📦 Prerequisites
 
-- **Node.js** ≥ 16 & **npm**
+- **Node.js** ≥ 16 & **npm**  
 - A running **Gotham Blog API** on `http://localhost:5113`  
   (see [backend README](../backend/README.md))
 
@@ -67,8 +61,7 @@ Admins patrol the system — keeping order by managing users.
 
 ## ⚙️ Installation & Development
 
-1. **Clone the repo**
-
+1. **Clone the repo**  
    ```bash
    git clone https://github.com/yourusername/GothamBlog.git
    cd GothamBlog/frontend
