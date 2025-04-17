@@ -6,6 +6,7 @@ import { format } from 'date-fns';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import { getCommentsForPost, createComment } from '../services/commentService';
+import { getLikes, createLike, deleteLike } from '../services/likeService';
 
 const getImageForPost = (post) => {
   const title = (post.Title || "").toLowerCase();
@@ -31,6 +32,10 @@ const SinglePost = () => {
 
   const categoryName = post?.CategoryName || 'Unknown';
 
+  // track the user's like (if any) on this post
+  const [isLiked, setIsLiked] = useState(false);
+  const [likeId, setLikeId] = useState(null);
+
   const formatDate = (dateString) => {
     try {
       return dateString ? format(new Date(dateString), 'dd/MM/yyyy') : 'Unknown Date';
@@ -40,24 +45,68 @@ const SinglePost = () => {
   };
 
   useEffect(() => {
-    const fetchPostAndComments = async () => {
+    let cancelled = false;
+
+    //load post & comments in parallel
+    const loadContent = async () => {
       try {
-        const response = await API.get(`/BlogPost/${id}`);
-        setPost(response.data);
-
-        const commentsData = await getCommentsForPost(Number(id));
+        const [postResp, commentsData] = await Promise.all([
+          API.get(`/BlogPost/${id}`),
+          getCommentsForPost(+id),
+        ]);
+        if (cancelled) return;
+        setPost(postResp.data);
         setComments(commentsData);
-
-      } catch (err) {
-        console.error('Error fetching post or comments:', err);
-        setError('Could not load post.');
+      } catch (e) {
+        console.error(e);
+        if (!cancelled) setError('Could not load post');
       }
     };
-    fetchPostAndComments();
-  }, [id]);
 
-  if (error) return <p className="text-danger">{error}</p>;
-  if (!post) return <p>Loading...</p>;
+    //load this user's like once (fire & forget)
+    const loadLike = async () => {
+      if (!user) return;
+      try {
+        const all = await getLikes();
+        if (cancelled) return;
+        const me = all.find(l => l.BlogPostId === +id);
+        if (me) {
+          setIsLiked(true);
+          setLikeId(me.LikeId);
+        }
+      } catch (e) {
+        console.warn('couldn’t load like state', e);
+      }
+    };
+
+    loadContent();
+    loadLike();
+
+    return () => { cancelled = true; };
+  }, [id, user]);
+
+  const handleLikeClick = async () => {
+    if (!user) {
+      alert('Please log in or register to like posts.');
+      return;
+    }
+
+    try {
+      if (isLiked) {
+        // unlike
+        await deleteLike(likeId);
+        setIsLiked(false);
+        setLikeId(null);
+      } else {
+        // like
+        const newLike = await createLike(post.BlogPostId);
+        setIsLiked(true);
+        setLikeId(newLike.likeId);
+      }
+    } catch (e) {
+      console.error('Failed to toggle like:', e);
+    }
+  };
 
   const handleCommentSubmit = async () => {
     try {
@@ -70,6 +119,8 @@ const SinglePost = () => {
       console.error('Failed to post comment:', error);
     }
   };
+  if (error) return <p className="text-danger">{error}</p>;
+  if (!post) return <p>Loading...</p>;
 
   return (
     <div className="single-post-page">
@@ -91,6 +142,14 @@ const SinglePost = () => {
           className="single-post-image"
         />
         <p className="single-post-content">{post.Content}</p>
+
+        <button
+          onClick={handleLikeClick}
+          className="like-button"
+          aria-label={isLiked ? 'Unlike' : 'Like'}
+        >
+          {isLiked ? '❤️' : '🤍'} {isLiked ? 'Unlike' : 'Like'}
+        </button>
 
         <hr />
         <div className="comments-section">
@@ -123,7 +182,7 @@ const SinglePost = () => {
 
         <button className="back-button" onClick={() => navigate('/posts')}>← Back to Posts</button>
       </div>
-    </div>
+    </div >
   );
 };
 
