@@ -100,8 +100,8 @@ namespace GothamPostBlogAPI.Services
                     new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString()), // Store User ID
                     
                     // Use the mapped role string instead of user.Role.ToString()
-                    new Claim(ClaimTypes.Role, roleString)
-                    //new Claim(ClaimTypes.Role, user.Role.ToString()), // Store Role (Admin/User) 
+                    //new Claim(ClaimTypes.Role, roleString)
+                    new Claim(ClaimTypes.Role, user.Role.ToString()), // Store Role (Admin/User) 
                     }),
 
                     Expires = DateTime.UtcNow.AddHours(2), // Token expires in 2 hours

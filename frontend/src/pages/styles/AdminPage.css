@@ -1,0 +1,47 @@
+
+.admin-page {
+    background-color: #0d1321;   
+    min-height: calc(100vh - 120px);
+    padding: 3rem 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .admin-page .page-heading {
+    font-family: inherit;     
+    font-size: 2.5rem;     
+    margin-bottom: 1.5rem;
+  }
+  
+  .admin-wrapper {
+    width: 100%;
+    max-width: 1000px;
+    background-color: #1c1f2b; 
+    padding: 2rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  }
+
+  .admin-wrapper .table thead th {
+    background-color: #0f1123; 
+    color: #e5e7eb;            
+    border-color: #334155;     
+  }
+  
+  .admin-wrapper .table thead th {
+    border-bottom: 2px solid #334155;
+    color: #cbd5e1;
+  }
+  
+  .admin-wrapper .table tbody tr {
+    border-bottom: 1px solid #334155;
+  }
+  
+  .admin-wrapper .table tbody td {
+    vertical-align: middle;
+  }
+
+  .admin-wrapper .btn-danger {
+    font-weight: bold;
+  }

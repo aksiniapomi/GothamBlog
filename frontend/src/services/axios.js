@@ -31,7 +31,7 @@ API.interceptors.response.use(   //handle responses globally/ show meesages or l
 );
 export const getBlogPosts = async () => {
   try {
-    const response = await api.get('/blogpost');
+    const response = await API.get('/blogpost');
     // Extract the $values array from the response
     return response.data.$values || [];
   } catch (error) {
