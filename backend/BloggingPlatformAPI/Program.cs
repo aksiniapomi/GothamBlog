@@ -269,13 +269,23 @@ app.UseIpRateLimiting(); // Enable rate limiting
 
 app.MapControllers();
 
-app.Urls.Add("http://+:8080");
+//app.Urls.Add("http://+:8080");
 
-using (var scope = app.Services.CreateScope())
-{
-    var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
- dbContext.Database.Migrate(); // This applies any pending migrations
-}
+//using (var scope = app.Services.CreateScope())
+//{
+   // var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+    //try
+    //{
+        // This will create the database and apply all pending migrations
+      //  context.Database.Migrate();
+      //  Console.WriteLine("Database migration completed successfully.");
+   // }
+   // catch (Exception ex)
+   // {
+   //     Console.WriteLine($"Database migration failed: {ex.Message}");
+   //     // Log the error but don't crash the app
+  //  }
+//}
 
 //start the app 
 app.Run();
