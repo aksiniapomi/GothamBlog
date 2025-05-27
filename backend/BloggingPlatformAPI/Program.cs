@@ -104,7 +104,8 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowFrontend",
         policy =>
         {
-            policy.WithOrigins("http://localhost:5173") //frontend port 
+            policy.WithOrigins("http://localhost:5173", //frontend port 
+            "https://tangerine-centaur-61bb46.netlify.app")
                   .AllowAnyHeader()
                   .AllowAnyMethod()
                   .AllowCredentials(); //HTTP-only cookies 
