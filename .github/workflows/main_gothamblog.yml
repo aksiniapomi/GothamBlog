@@ -71,6 +71,4 @@ jobs:
           app-name: 'gothamblog'
           slot-name: 'Production'
           package: .
-          app-name: 'gothamblog'
-          slot-name: 'Production'
-          package: './package'
+          
