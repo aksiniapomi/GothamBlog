@@ -274,7 +274,7 @@ app.Urls.Add("http://+:8080");
 using (var scope = app.Services.CreateScope())
 {
     var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-    dbContext.Database.Migrate(); // This applies any pending migrations
+ dbContext.Database.Migrate(); // This applies any pending migrations
 }
 
 //start the app 
