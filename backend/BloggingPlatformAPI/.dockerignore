@@ -1,0 +1,6 @@
+# flyctl launch added from .gitignore
+**/appsettings.json
+**/appsettings.Development.json
+# macOS system file
+**/.DS_Store
+fly.toml

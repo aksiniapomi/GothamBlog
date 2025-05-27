@@ -104,8 +104,9 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowFrontend",
         policy =>
         {
-            policy.WithOrigins("http://localhost:5173", //frontend port 
-            "https://tangerine-centaur-61bb46.netlify.app")
+            policy.WithOrigins("http://localhost:5173" //frontend port 
+                                                       // "https://tangerine-centaur-61bb46.netlify.app"
+            )
                   .AllowAnyHeader()
                   .AllowAnyMethod()
                   .AllowCredentials(); //HTTP-only cookies 
@@ -259,7 +260,7 @@ app.Use(async (context, next) =>
 //    .AllowAnyHeader()); // Allows any headers
 
 app.UseCors("AllowFrontend");
-app.UseCors("AllowNetlify");
+//app.UseCors("AllowNetlify");
 
 app.UseAuthentication();
 app.UseAuthorization();
@@ -267,6 +268,14 @@ app.UseAuthorization();
 app.UseIpRateLimiting(); // Enable rate limiting
 
 app.MapControllers();
+
+app.Urls.Add("http://+:8080");
+
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+    dbContext.Database.Migrate(); // This applies any pending migrations
+}
 
 //start the app 
 app.Run();
