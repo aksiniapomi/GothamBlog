@@ -1,3 +1,5 @@
+//This is application definition—the component tree that actually renders UI and implements your pages
+
 import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate, Link, useNavigate } from "react-router-dom";
 import Navbar from './components/Navbar';

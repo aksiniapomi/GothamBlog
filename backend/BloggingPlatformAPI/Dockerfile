@@ -20,7 +20,7 @@ COPY --from=build /out .
 RUN apt update && apt install -y sqlite3
 
 # Copy the database file into the container, ensures your database is inside the containe 
-#COPY bloggingplatform.db /app/bloggingplatform.db
+COPY bloggingplatform.db /app/bloggingplatform.db
 
 # Expose ports
 EXPOSE 8080

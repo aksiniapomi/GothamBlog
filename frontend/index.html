@@ -2,13 +2,18 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+     <!-- favicon displayed in the browser tab -->
     <link rel="icon" type="image/png" href="/favicon.png" />
+     <!-- loading custom “Bangers” Google font -->
     <link href="https://fonts.googleapis.com/css2?family=Bangers&display=swap" rel="stylesheet">
+     <!-- ensure proper scaling on mobile devices -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Gotham Blog Post</title>
   </head>
   <body>
+     <!-- React will “take over” this div and render app into it/ never nvigate to a different HTML file -->
     <div id="root"></div>
+    <!-- entire JS bundle (and any imports) is loaded here -->
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>

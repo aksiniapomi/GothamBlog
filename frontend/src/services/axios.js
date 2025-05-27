@@ -5,7 +5,7 @@ const API = axios.create({
   withCredentials: true, //sends cookies like JWT with request; allows the frontend to send the jwt cookie 
 });
 
-//Inject JWT from cookie into Authorization header
+//Inject JWT from cookie into Authorization header automatically
 API.interceptors.request.use(
   (config) => {
     // Parse the document.cookie string to find the jwt cookie
@@ -19,7 +19,7 @@ API.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
-// Response interceptor 
+// Response interceptor - catch 401 globally
 API.interceptors.response.use(   //handle responses globally/ show meesages or log out if 401 
   response => response,
   error => {
