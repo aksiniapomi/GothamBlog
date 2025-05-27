@@ -1,7 +1,4 @@
-# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
-# More GitHub Actions for Azure: https://github.com/Azure/actions
-
-name: Build and deploy Node.js app to Azure Web App - gothamblog
+name: Build & deploy React app to Azure Web App (gothamblog)
 
 on:
   push:
@@ -13,62 +10,62 @@ jobs:
   build:
     runs-on: ubuntu-latest
     permissions:
-      contents: read #This is required for actions/checkout
+      contents: read
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-      - name: Set up Node.js version
+      - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '20.x'
+          node-version: "20.x"
 
-      - name: npm install, build, and test
+      - name: Install & build
         run: |
-          npm install
-          npm run build --if-present
-          npm run test --if-present
+          cd frontend
+          npm ci
+          npm run build
 
-      - name: Zip artifact for deployment
-        run: zip release.zip ./* -r
+      # Zip only the production build
+      - name: Package build output
+        run: |
+          cd frontend/dist
+          zip -r ../release.zip .
 
-      - name: Upload artifact for deployment job
+      - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: node-app
-          path: release.zip
+          name: webapp-package
+          path: frontend/release.zip
 
   deploy:
-    runs-on: ubuntu-latest
     needs: build
-    environment:
-      name: 'Production'
-      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+    runs-on: ubuntu-latest
     permissions:
-      id-token: write #This is required for requesting the JWT
-      contents: read #This is required for actions/checkout
+      id-token: write     # for OIDC (optional)
+      contents: read      # for checkout
 
     steps:
-      - name: Download artifact from build job
+      - name: Download artifact
         uses: actions/download-artifact@v4
         with:
-          name: node-app
+          name: webapp-package
 
-      - name: Unzip artifact for deployment
-        run: unzip release.zip
-      
+      - name: Unzip package
+        run: unzip release.zip -d package
+
       - name: Login to Azure
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_1D14A1BEA9D2482F90EE1BFB757E876A }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_275D1527072E4844945D8E57C73EFC88 }}
+          client-id:     ${{ secrets.AZUREAPPSERVICE_CLIENTID_1D14A1BEA9D2482F90EE1BFB757E876A }}
+          tenant-id:     ${{ secrets.AZUREAPPSERVICE_TENANTID_275D1527072E4844945D8E57C73EFC88 }}
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_C7F1D6929C804CA490D122F36B0A305E }}
 
-      - name: 'Deploy to Azure Web App'
+      - name: Deploy to Azure Web App
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
         with:
           app-name: 'gothamblog'
           slot-name: 'Production'
-          package: .
-          
+          package: './package'
