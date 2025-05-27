@@ -259,6 +259,7 @@ app.Use(async (context, next) =>
 //    .AllowAnyHeader()); // Allows any headers
 
 app.UseCors("AllowFrontend");
+app.UseCors("AllowNetlify");
 
 app.UseAuthentication();
 app.UseAuthorization();
